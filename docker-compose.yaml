@@ -1,0 +1,71 @@
+version: '3.9'
+
+services:
+
+  backend:
+    build: ./backend/
+    container_name: backend
+    restart: always
+    ports:
+      - 8000:8000
+    volumes:
+      - backend:/my_app
+    
+
+  frontend:
+    image: nginx
+    container_name: frontend
+    restart: always
+    ports:
+      - 3001:80
+    volumes:
+      - frontend:/usr/share/nginx/html
+
+
+  # db:
+  #   image: postgres
+  #   restart: always
+  #   shm_size: 128mb
+  #   container_name: db
+  #   ports:
+  #     - 5432:5432
+  #   environment:
+  #     POSTGRES_PASSWORD: 'hicham1234'
+  #     POSTGRES_USER: 'hicham'
+  #     POSTGRES_DB: 'mydb'
+
+
+  # adminer:
+  #   image: adminer
+  #   restart: always
+  #   container_name: adminer
+  #   ports:
+  #     - 8080:8080
+
+  redis:
+    image: redis:7
+    restart: always
+    container_name: redis
+    ports:
+      - 6379:6379
+  
+
+volumes:
+  backend:
+    driver: local
+    name: backend
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/haghouli/Desktop/ft_transcendence/backend/
+      # device: /nfs1/homes/haghouli/Desktop/ft_transcendence/backend/
+  
+
+  frontend:
+    driver: local
+    name: frontend
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/haghouli/Desktop/ft_transcendence/frontend/
+      # device: /nfs1/homes/haghouli/Desktop/ft_transcendence/frontend/
