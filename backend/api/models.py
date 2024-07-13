@@ -48,29 +48,7 @@ class Match(models.Model):
 
     def __str__(self) -> str:
         return 'match_' + str(self.id)
-
-# for fix the proble of getting user opponent
-
-# class Match1():
-#     user1 = models.ForeignKey(
-#         User,
-#         on_delete=models.CASCADE,
-#         related_name="match_user1"
-#     )
-#     user2 = models.ForeignKey(
-#         User,
-#         on_delete=models.CASCADE,
-#         related_name="match_user2"
-#     )
-#     start_date = models.DateTimeField(auto_now=True)
-#     end_date = models.DateTimeField()
-#     type = models.IntegerField()
-#     status = models.IntegerField()
-
-#     def __str__(self) -> str:
-#         return 'match1_' + str(self.id)
-
-
+    
 class UserMatch(models.Model):
     match = models.ForeignKey(
         Match,
@@ -82,14 +60,65 @@ class UserMatch(models.Model):
         on_delete=models.CASCADE,
         related_name='user'
     )
-    winner = models.ForeignKey(
-        User,
-        on_delete=models.CASCADE,
-        related_name='match_winner'
-    )
 
     def __str__(self) -> str:
         return 'usermatch_' + str(self.id)
+
+# for fix the proble of getting user opponent
+
+# class singleMatch():
+#     player1 = models.ForeignKey(
+#         User,
+#         on_delete=models.CASCADE,
+#         related_name="match_player1"
+#     )
+#     player2 = models.ForeignKey(
+#         User,
+#         on_delete=models.CASCADE,
+#         related_name="match_player2"
+#     )
+
+#     player1_score = models.IntegerField(blank=True, default=0)
+#     player2_score = models.IntegerField(blank=True, default=0)
+
+#     start_date = models.DateTimeField(auto_now=True)
+#     end_date = models.DateTimeField()
+#     type = models.IntegerField()
+#     status = models.IntegerField()
+
+#     def __str__(self) -> str:
+#         return 'match1_' + str(self.id)
+
+# class Team():
+
+#     user1 = models.ForeignKey(
+#         User,
+#         on_delete=models.CASCADE,
+#         related_name="team_user1"
+#     )
+
+#     user2 = models.ForeignKey(
+#         User,
+#         on_delete=models.CASCADE,
+#         related_name="team_user2"
+#     )
+
+
+# class dueMatch():
+#     team1 = models.ForeignKey(Team, on_delete=models.CASCADE, related_name="team_1")
+#     team2 = models.ForeignKey(Team, on_delete=models.CASCADE, related_name="team_2")
+
+#     team1_score = models.IntegerField(blank=True, default=0)
+#     team2_score = models.IntegerField(blank=True, default=0)
+
+#     start_date = models.DateTimeField(auto_now=True)
+#     end_date = models.DateTimeField()
+#     type = models.IntegerField()
+#     status = models.IntegerField()
+
+#     def __str__(self) -> str:
+#         return 'dueMatch_' + str(self.id)
+
 
 class Tournament(models.Model):
     start_date = models.DateTimeField(auto_now=True)
@@ -99,6 +128,33 @@ class Tournament(models.Model):
 
     def __str__(self) -> str:
         return 'tournament_' + str(self.id)
+    
+
+# class matchTournament(models.Model):
+
+#     match = models.ForeignKey(Match, on_delete=models.CASCADE, related_name="match")
+#     tour = models.ForeignKey(Tournament, on_delete=models.CASCADE, related_name="tour")
+
+#     def __str__(self) -> str:
+#         return 'match_tournament_' + str(self.id)
+
+# class tournamentScore(models.Model):
+
+#     user = models.ForeignKey(
+#         User,
+#         on_delete=models.CASCADE,
+#         related_name="match"
+#     )
+#     tour = models.ForeignKey(
+#         Tournament,
+#         on_delete=models.CASCADE,
+#         related_name="tour"
+#     )
+
+#     score = models.IntegerField(default=0, blank=True)
+
+#     def __str__(self) -> str:
+#         return 'tournament_score_' + str(self.id)
 
 class userTournament(models.Model):
     user = models.ForeignKey(
@@ -114,12 +170,6 @@ class userTournament(models.Model):
         Match,
         null=True,
         on_delete=models.SET_NULL
-    )
-    winner = models.ForeignKey(
-        User, 
-        null=True,
-        on_delete=models.SET_NULL,
-        related_name='tourWinner'
     )
 
     def __str__(self) -> str:
@@ -144,7 +194,6 @@ class chatRoom(models.Model):
 
     class Meta:
         unique_together = ('user1', 'user2')
-    
 
     def clean(self):
         if chatRoom.objects.filter(user1=self.user2, user2=self.user1).exists():
@@ -180,11 +229,3 @@ class Message(models.Model):
 
     def __str__(self) -> str:
         return 'message_' + str(self.id)
-
-
-# user   match
-
-
-# usermatch 
-# -> user_id
-# -> match_id

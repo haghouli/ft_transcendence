@@ -88,4 +88,4 @@ class UserMatchSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.UserMatch
-        fields = ['id', 'match', 'user', 'winner']
+        fields = ['id', 'match', 'user']
