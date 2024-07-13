@@ -95,7 +95,7 @@ def saveIntraUserImage(image_url, file_name):
 #         return createUserCookie(id)
 
 
-class test_cookie(APIView):
+class set_cookie(APIView):
 
     authentication_classes = []
     permission_classes = [AllowAny]
@@ -104,7 +104,19 @@ class test_cookie(APIView):
 
         response = Response()
         response.set_cookie(key="test", value="test_value")
-        response.data = {'message': 'hello'}
+        response.data = {'message': 'cookie has been seted'}
+        return response
+    
+class check_cookie(APIView):
+
+    authentication_classes = []
+    permission_classes = [AllowAny]
+
+    def get(self, request):
+
+        response = Response()
+        response.data = {'message': 'checked cookie'}
+        print(self.request.COOKIES, file=sys.stderr)
         return response
 
 class verify_user(APIView):
@@ -303,7 +315,7 @@ class getOnlineFriendsView(APIView):
         serializer = serializers.FriendShipSerializer(friend_ships, many=True)
         return Response(serializer.data)
 
-class getPandingFrindRequestsView(APIView):
+class getPandingFriendRequestsView(APIView):
 
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
@@ -330,6 +342,8 @@ class getMatchesView(APIView):
         serializer = serializers.MatchSerializer(matches, many=True)
         return Response(serializer.data)
 
+
+
 class getTournaments(APIView):
 
     authentication_classes = [JWTAuthentication]
@@ -339,6 +353,37 @@ class getTournaments(APIView):
 
         tournaments = models.Tournament.objects.all()
         serializer = serializers.TournamentSerializer(tournaments, many=True)
+        return Response(serializer.data)
+    
+
+class getTournamentUsers(APIView):
+
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, id):
+
+        userTournaments = models.userTournament.objects.filter(tournament__id=int(id))
+        users = []
+        for item in userTournaments:
+            users.append(item.user)
+        
+        serializer = serializers.UserSerializer(users, many=True)
+        return Response(serializer.data)
+    
+class getTournamentMatches(APIView):
+
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, id):
+
+        userTournaments = models.userTournament.objects.filter(tournament__id=int(id))
+        matches = []
+        for item in userTournaments:
+            matches.append(item.maatch)
+        
+        serializer = serializers.MatchSerializer(matches, many=True)
         return Response(serializer.data)
 
 class getUserScore(APIView):

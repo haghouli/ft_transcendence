@@ -11,22 +11,20 @@ online_users = {}
 
 class ChatConsumer(AsyncWebsocketConsumer):
     async def connect(self):
+
+
         self.room_name = self.scope["url_route"]["kwargs"]["room_name"]
         self.room_group_name = f"chat_room_{self.room_name}"
 
+        if self.scope['user']:
+            user_id = self.scope['user'].id
 
-        # get the querry string
-        query_params = self.scope['query_string'].decode()
-        query_dict = dict(q.split('=') for q in query_params.split('&'))
-        user_id = query_dict.get('id')
-
-        # check is user allowed to join the chat room
-        isAllowd = await self.check_user_permition(self.room_name, user_id)
-        # print(isAllowd, file=sys.stderr)
-    
-        if isAllowd:
-            await self.channel_layer.group_add(self.room_group_name, self.channel_name)
-            await self.accept()
+            # check is user allowed to join the chat room
+            isAllowd = await self.check_user_permition(self.room_name, user_id)
+        
+            if isAllowd:
+                await self.channel_layer.group_add(self.room_group_name, self.channel_name)
+                await self.accept()
 
     async def disconnect(self, close_code):
         await self.channel_layer.group_discard(self.room_group_name, self.channel_name)
@@ -106,38 +104,36 @@ class OnlineConsumer(AsyncWebsocketConsumer):
 
     async def connect(self):
 
-        query_params = self.scope['query_string'].decode()
-        query_dict = dict(q.split('=') for q in query_params.split('&'))
-        self.user_id = int(query_dict.get('id'))
+        print(f"the user is : {self.scope['user'].id}" , file=sys.stderr)
 
-        if self.user_id not in online_users:
-            online_users[self.user_id] = 1
-            await self.updata_user_status(True)
-            print(f'connect first time {online_users[self.user_id]}', file=sys.stderr)
-        else:
-            online_users[self.user_id] += 1
-            print(f'connect another time {online_users[self.user_id]}', file=sys.stderr)
+        if self.scope['user']:
+            if self.scope['user'].id not in online_users:
+                online_users[self.scope['user'].id] = 1
+                await self.updata_user_status(True)
+                print(f'connect first time {online_users[self.scope['user'].id]}', file=sys.stderr)
+            else:
+                online_users[self.scope['user'].id] += 1
+                print(f'connect another time {online_users[self.scope['user'].id]}', file=sys.stderr)
 
-        await self.accept()
+            await self.accept()
 
 
     async def receive(self, text_data):
         pass
 
-
     async def disconnect(self, close_code):
-        online_users[self.user_id] -= 1
-        if online_users[self.user_id] == 0:
-            print(f'disconnect {online_users[self.user_id]}', file=sys.stderr)
+        online_users[self.scope['user'].id] -= 1
+        if online_users[self.scope['user'].id] == 0:
+            print(f'disconnect {online_users[self.scope['user'].id]}', file=sys.stderr)
             await self.updata_user_status(False)
-            del online_users[self.user_id]
+            del online_users[self.scope['user'].id]
         else:
-            print(f'disconnect {online_users[self.user_id]}', file=sys.stderr)
+            print(f'disconnect {online_users[self.scope['user'].id]}', file=sys.stderr)
 
     @database_sync_to_async
     def updata_user_status(self, is_online):
         try:
-            user = models.User.objects.get(pk=self.user_id)
+            user = models.User.objects.get(pk=self.scope['user'].id)
             user.is_online = is_online
             user.save()
         
