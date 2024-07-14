@@ -22,8 +22,8 @@ urlpatterns = [
     path('users/user/score/<int:id>', views.getUserScore.as_view(), name="get_user_score"),
     path('users/user/chat_rooms/<int:id>', views.getUserChatRooms.as_view(), name='get_user_chat_rooms'),
     path('users/user/me/', views.getMeView.as_view(), name="get_me"),
+    path('users/user/me/panding_friend_requests/', views.getPandingFriendRequestsView.as_view(), name='get_panding_friend_requests'),
 
-    path('users/user/me/pading_friend_requests/', views.getPandingFriendRequestsView.as_view(), name='get_panding_friend_requests'),
 
     path('users/user/send_friend_request/', views.sendFriendView.as_view(), name='send_fiend_request'),
     path('users/user/accept_friend_request/<int:id>', views.acceptFriendRequestView.as_view(), name='accept_fiend_request'),
@@ -41,7 +41,4 @@ urlpatterns = [
     path('chat_rooms/room/', views.createChatRoom.as_view(), name='create_chat_room'),
     path('chat_rooms/room/<int:id>', views.deleteChatRoom.as_view(), name='delete_chat_room'),
 
-    
-    path('set_cookie/', views.set_cookie.as_view(), name="set_cookie"),
-    path('check_cookie/', views.check_cookie.as_view(), name="check_cookie"),
 ]

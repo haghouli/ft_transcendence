@@ -108,12 +108,14 @@ class OnlineConsumer(AsyncWebsocketConsumer):
 
         if self.scope['user']:
             if self.scope['user'].id not in online_users:
-                online_users[self.scope['user'].id] = 1
+                # online_users[self.scope['user'].id]['counter'] = 1
+                # online_users[self.scope['user'].id]['channel_name'] = self.channel_name
+                online_users[self.scope['user'].id] = {'counter': 1, 'channel_name': self.channel_name}
                 await self.updata_user_status(True)
-                print(f'connect first time {online_users[self.scope['user'].id]}', file=sys.stderr)
+                print(f'connect first time {online_users[self.scope['user'].id]['counter']}', file=sys.stderr)
             else:
-                online_users[self.scope['user'].id] += 1
-                print(f'connect another time {online_users[self.scope['user'].id]}', file=sys.stderr)
+                online_users[self.scope['user'].id]['counter'] += 1
+                print(f'connect another time {online_users[self.scope['user'].id]['counter']}', file=sys.stderr)
 
             await self.accept()
 
@@ -122,13 +124,13 @@ class OnlineConsumer(AsyncWebsocketConsumer):
         pass
 
     async def disconnect(self, close_code):
-        online_users[self.scope['user'].id] -= 1
-        if online_users[self.scope['user'].id] == 0:
-            print(f'disconnect {online_users[self.scope['user'].id]}', file=sys.stderr)
+        online_users[self.scope['user'].id]['counter'] -= 1
+        if online_users[self.scope['user'].id]['counter'] == 0:
+            print(f'disconnect {online_users[self.scope['user'].id]['counter']}', file=sys.stderr)
             await self.updata_user_status(False)
             del online_users[self.scope['user'].id]
         else:
-            print(f'disconnect {online_users[self.scope['user'].id]}', file=sys.stderr)
+            print(f'disconnect {online_users[self.scope['user'].id]['counter']}', file=sys.stderr)
 
     @database_sync_to_async
     def updata_user_status(self, is_online):

@@ -8,6 +8,10 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.permissions import AllowAny
+from .consumers import online_users
+
+from channels.layers import get_channel_layer
+from asgiref.sync import async_to_sync
 
 from . import serializers
 from . import models
@@ -19,6 +23,7 @@ import requests
 import os
 import sys
 from django.utils import timezone
+from .customObjects import CustumeFriendShip
 # ---------------------------- functions ----------------------------
 
 def createTokenForUser(user):
@@ -59,65 +64,26 @@ def saveIntraUserImage(image_url, file_name):
             f.write(response.content)
 
 
+def getCustomFriendship(friend_ships, user_id):
+
+    custom_friend_ships = []
+    for item in friend_ships:
+        tmp_user = None
+        tmp_user = item.friend_ship_reciever if item.friend_ship_sender.id == user_id else item.friend_ship_sender
+
+        friend_ship = CustumeFriendShip(
+            user=tmp_user,
+            request_date=item.request_date,
+            status=item.status,
+            response_date=item.response_date,
+        )
+        custom_friend_ships.append(friend_ship)
+
+    serializer = serializers.CustuomeFriendShipSerializer(custom_friend_ships, many=True)
+    return serializer.data
+
+
 # ---------------------------- views ----------------------------
-
-# class intraLoginView(APIView):
-#     def post(self, request):
-#         result = validateToken(request)
-#         if result is not None:
-#             return Response({'message': 'you are already logged in'})
-
-#         res_json = getIntraUser(request)
-#         if res_json is None:
-#             return Response({'error': 'invalid login'},status=400)
-
-#         id = res_json['id']
-#         first_name = res_json['first_name']
-#         last_name = res_json['last_name']
-#         email = res_json['email']
-#         username = res_json['login']
-#         image_url = res_json['image']['link']
-
-#         user = models.User.objects.filter(username=username, id=id).first()
-#         if user is not None:
-#             return createUserCookie(id)
-#         file_name = 'uploads/' + username + '.jpg'
-#         saveIntraUserImage(image_url, file_name)
-#         newInstence = models.User(
-#             id=id,
-#             username=username,
-#             first_name=first_name,
-#             last_name=last_name,
-#             email=email,
-#             avatar=file_name,
-#         )
-#         newInstence.save()
-#         return createUserCookie(id)
-
-
-class set_cookie(APIView):
-
-    authentication_classes = []
-    permission_classes = [AllowAny]
-
-    def get(self, request):
-
-        response = Response()
-        response.set_cookie(key="test", value="test_value")
-        response.data = {'message': 'cookie has been seted'}
-        return response
-    
-class check_cookie(APIView):
-
-    authentication_classes = []
-    permission_classes = [AllowAny]
-
-    def get(self, request):
-
-        response = Response()
-        response.data = {'message': 'checked cookie'}
-        print(self.request.COOKIES, file=sys.stderr)
-        return response
 
 class verify_user(APIView):
 
@@ -280,11 +246,13 @@ class userView(APIView):
 
 # ***************************************************************************************
 
-
 class getFriendsView(APIView):
 
-    authentication_classes = [JWTAuthentication]
-    permission_classes = [IsAuthenticated]
+    # authentication_classes = [JWTAuthentication]
+    # permission_classes = [IsAuthenticated]
+
+    authentication_classes = []
+    permission_classes = [AllowAny]
 
     def get(self, request, id):
 
@@ -293,26 +261,34 @@ class getFriendsView(APIView):
             (Q(friend_ship_sender=user) & Q(status=1))
             | Q(friend_ship_reciever=user) & Q(status=1)
         )
-        
-        serializer = serializers.FriendShipSerializer(friend_ships, many=True)
-        return Response(serializer.data)
+
+        data = getCustomFriendship(friend_ships, id)
+        return Response(data)
 
 
 
 class getOnlineFriendsView(APIView):
 
-    authentication_classes = [JWTAuthentication]
-    permission_classes = [IsAuthenticated]
+    # authentication_classes = [JWTAuthentication]
+    # permission_classes = [IsAuthenticated]
+
+    authentication_classes = []
+    permission_classes = [AllowAny]
 
     def get(self, request, id):
 
         user = models.User.objects.get(id=id)
         friend_ships = models.FriendShip.objects.filter(
-            (Q(friend_ship_sender=user) & Q(status=1) & Q(is_online=1))
-            | (Q(friend_ship_reciever=user) & Q(status=1) & Q(is_online=1))
+            (Q(friend_ship_sender=user) & Q(friend_ship_sender__status=1) & Q(friend_ship_sender__is_online=1))
+            | (Q(friend_ship_reciever=user) & Q(friend_ship_sender__status=1) & Q(friend_ship_sender__is_online=1))
         )
+
+        online_users = []
+        for item in friend_ships:
+            online_user = item.friend_ship_sender if item.friend_ship_sender.id != id else item.friend_ship_reciever
+            online_users.append(online_user)
         
-        serializer = serializers.FriendShipSerializer(friend_ships, many=True)
+        serializer = serializers.UserSerializer(online_users, many=True)
         return Response(serializer.data)
 
 class getPandingFriendRequestsView(APIView):
@@ -324,7 +300,19 @@ class getPandingFriendRequestsView(APIView):
 
         user = request.user
         friend_requests_received = models.FriendShip.objects.filter(friend_ship_reciever=user, status=0)
-        serializer = serializers.FriendShipSerializer(friend_requests_received, many=True)
+        
+        custom_friend_ships = []
+        for item in friend_requests_received:
+
+            friend_ship = CustumeFriendShip(
+                user=item.friend_ship_sender,
+                request_date=item.request_date,
+                status=item.status,
+                response_date=item.response_date,
+            )
+            custom_friend_ships.append(friend_ship)
+
+        serializer = serializers.CustuomeFriendShipSerializer(custom_friend_ships, many=True)
         return Response(serializer.data)
 
 class getMatchesView(APIView):
@@ -335,14 +323,9 @@ class getMatchesView(APIView):
     def get(self, request, id):
 
         user = models.User.objects.get(id=id)
-        userMatch = models.UserMatch.objects.filter(user=user)
-        matches = []
-        for e in userMatch:
-            matches.append(e.match)
-        serializer = serializers.MatchSerializer(matches, many=True)
+        matches = models.singleMatch.objects.filter(Q(player1=user) | Q(player2=user))
+        serializer = serializers.SingleMatchSerializer(matches, many=True)
         return Response(serializer.data)
-
-
 
 class getTournaments(APIView):
 
@@ -378,12 +361,12 @@ class getTournamentMatches(APIView):
 
     def get(self, request, id):
 
-        userTournaments = models.userTournament.objects.filter(tournament__id=int(id))
+        matchTournament = models.matchTournament.objects.filter(tour__id=int(id))
         matches = []
-        for item in userTournaments:
-            matches.append(item.maatch)
+        for item in matchTournament:
+            matches.append(item.match)
         
-        serializer = serializers.MatchSerializer(matches, many=True)
+        serializer = serializers.SingleMatchSerializer(matches, many=True)
         return Response(serializer.data)
 
 class getUserScore(APIView):
@@ -446,7 +429,6 @@ class createChatRoom(APIView):
             user2_id = request.data.get('user2')
             user2 = models.User.objects.get(pk=user2_id)
 
-
             models.chatRoom.objects.create(
                 user1=user1,
                 user2=user2
@@ -475,6 +457,24 @@ class deleteChatRoom(APIView):
             return Response({'error': 'invalid data'}, status=400)
         
 
+def handleNotification(receiver_id):
+
+    if receiver_id in online_users:
+
+        print("i am here", file=sys.stderr)
+        channel_name = online_users[receiver_id]['channel_name']
+
+        group_name = "test_group"
+
+        channel_layer = get_channel_layer()
+        async_to_sync(channel_layer.group_add)(group_name, channel_name)
+        
+        async_to_sync(channel_layer.send)(group_name, {
+            "message": "hello"
+        })
+
+        async_to_sync(channel_layer.group_discard)(group_name, channel_name)
+
 class sendFriendView(APIView):
 
     authentication_classes = [JWTAuthentication]
@@ -483,8 +483,8 @@ class sendFriendView(APIView):
     def post(self, request):
         try:
             sender_id = request.user.id
-            receiver_id = request.data.get('reciver_id')
-            print(receiver_id, file=sys.stderr)
+            receiver_id = int(request.data.get('reciver_id'))
+            # print(receiver_id, file=sys.stderr)
 
             sender = models.User.objects.get(pk=sender_id)
             reveiver = models.User.objects.get(pk=receiver_id)
@@ -494,6 +494,9 @@ class sendFriendView(APIView):
                 friend_ship_reciever=reveiver,
                 status=0
             )
+            
+            # handleNotification(receiver_id)
+
             return Response({'message' : 'friend request sended successfully'})
         except Exception as e:
             print(e, file=sys.stderr)
