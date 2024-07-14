@@ -30,6 +30,12 @@ const startSocket = () => {
     socket.onclose = function(e) {
         console.log('Chat socket closed unexpectedly');
     };
+
+    socket.onmessage = function(e) {
+        alert('you have a new notification')
+        console.log('you have a new notification')
+    };
+
 }
 
 // *****************************************************

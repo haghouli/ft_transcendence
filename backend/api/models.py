@@ -40,54 +40,54 @@ class FriendShip(models.Model):
     def __str__(self) -> str:
         return 'friendship_' + str(self.id)
 
-class Match(models.Model):
-    start_date = models.DateTimeField(auto_now=True)
-    end_date = models.DateTimeField()
-    type = models.IntegerField()
-    status = models.IntegerField()
-
-    def __str__(self) -> str:
-        return 'match_' + str(self.id)
-    
-class UserMatch(models.Model):
-    match = models.ForeignKey(
-        Match,
-        on_delete=models.CASCADE,
-        related_name='match'
-    )
-    user = models.ForeignKey(
-        User,
-        on_delete=models.CASCADE,
-        related_name='user'
-    )
-
-    def __str__(self) -> str:
-        return 'usermatch_' + str(self.id)
-
-# for fix the proble of getting user opponent
-
-# class singleMatch():
-#     player1 = models.ForeignKey(
-#         User,
-#         on_delete=models.CASCADE,
-#         related_name="match_player1"
-#     )
-#     player2 = models.ForeignKey(
-#         User,
-#         on_delete=models.CASCADE,
-#         related_name="match_player2"
-#     )
-
-#     player1_score = models.IntegerField(blank=True, default=0)
-#     player2_score = models.IntegerField(blank=True, default=0)
-
+# class Match(models.Model):
 #     start_date = models.DateTimeField(auto_now=True)
 #     end_date = models.DateTimeField()
 #     type = models.IntegerField()
 #     status = models.IntegerField()
 
 #     def __str__(self) -> str:
-#         return 'match1_' + str(self.id)
+#         return 'match_' + str(self.id)
+    
+# class UserMatch(models.Model):
+#     match = models.ForeignKey(
+#         Match,
+#         on_delete=models.CASCADE,
+#         related_name='match'
+#     )
+#     user = models.ForeignKey(
+#         User,
+#         on_delete=models.CASCADE,
+#         related_name='user'
+#     )
+
+#     def __str__(self) -> str:
+#         return 'usermatch_' + str(self.id)
+
+# for fix the proble of getting user opponent
+
+class singleMatch(models.Model):
+    player1 = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name="match_player1"
+    )
+    player2 = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name="match_player2"
+    )
+
+    player1_score = models.IntegerField(blank=True, default=0)
+    player2_score = models.IntegerField(blank=True, default=0)
+
+    start_date = models.DateTimeField(auto_now=True)
+    end_date = models.DateTimeField()
+    type = models.IntegerField()
+    status = models.IntegerField()
+
+    def __str__(self) -> str:
+        return 'match1_' + str(self.id)
 
 # class Team():
 
@@ -130,31 +130,31 @@ class Tournament(models.Model):
         return 'tournament_' + str(self.id)
     
 
-# class matchTournament(models.Model):
+class matchTournament(models.Model):
 
-#     match = models.ForeignKey(Match, on_delete=models.CASCADE, related_name="match")
-#     tour = models.ForeignKey(Tournament, on_delete=models.CASCADE, related_name="tour")
+    match = models.ForeignKey(singleMatch, on_delete=models.CASCADE, related_name="matchTournament_match")
+    tour = models.ForeignKey(Tournament, on_delete=models.CASCADE, related_name="matchTournament_tour")
 
-#     def __str__(self) -> str:
-#         return 'match_tournament_' + str(self.id)
+    def __str__(self) -> str:
+        return 'match_tournament_' + str(self.id)
 
-# class tournamentScore(models.Model):
+class tournamentScore(models.Model):
 
-#     user = models.ForeignKey(
-#         User,
-#         on_delete=models.CASCADE,
-#         related_name="match"
-#     )
-#     tour = models.ForeignKey(
-#         Tournament,
-#         on_delete=models.CASCADE,
-#         related_name="tour"
-#     )
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name="user"
+    )
+    tour = models.ForeignKey(
+        Tournament,
+        on_delete=models.CASCADE,
+        related_name="tour"
+    )
 
-#     score = models.IntegerField(default=0, blank=True)
+    score = models.IntegerField(default=0, blank=True)
 
-#     def __str__(self) -> str:
-#         return 'tournament_score_' + str(self.id)
+    def __str__(self) -> str:
+        return 'tournament_score_' + str(self.id)
 
 class userTournament(models.Model):
     user = models.ForeignKey(
@@ -166,11 +166,8 @@ class userTournament(models.Model):
         Tournament,
         on_delete=models.CASCADE,
     )
-    maatch = models.ForeignKey(
-        Match,
-        null=True,
-        on_delete=models.SET_NULL
-    )
+
+    user_tournament_name = models.CharField(max_length=200)
 
     def __str__(self) -> str:
         return 'userTournament_' + str(self.id)

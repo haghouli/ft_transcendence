@@ -3,6 +3,7 @@ from . import models
 import sys
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
+from .customObjects import CustumeFriendShip
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     @classmethod
@@ -60,15 +61,19 @@ class FriendShipSerializer(serializers.ModelSerializer):
         model = models.FriendShip
         fields = ['id', 'friend_ship_sender', 'friend_ship_reciever', 'request_date', 'status', 'response_date']
     
-class MatchSerializer(serializers.ModelSerializer):
+class SingleMatchSerializer(serializers.ModelSerializer):
+
+    player1 = UserSerializer()
+    player2 = UserSerializer()
+
     class Meta:
-        model = models.Match
-        fields = ['start_date', 'end_date', 'type', 'status']
+        model = models.singleMatch
+        fields = ['id', 'player1', 'player2', 'player1_score', 'player2_score', 'start_date', 'end_date', 'type', 'status']
 
 class TournamentSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Tournament
-        fields = ['start_date', 'end_date', 'status', 'max_players']
+        fields = ['id', 'start_date', 'end_date', 'status', 'maxPlayers']
 
 class ScoreSerializer(serializers.ModelSerializer):
     class Meta:
@@ -84,8 +89,10 @@ class ChatRoomSerializer(serializers.ModelSerializer):
         fields = ['id', 'user1', 'user2']
 
 
-class UserMatchSerializer(serializers.ModelSerializer):
+class CustuomeFriendShipSerializer(serializers.ModelSerializer):
+
+    user = UserSerializer()
 
     class Meta:
-        model = models.UserMatch
-        fields = ['id', 'match', 'user']
+        model = CustumeFriendShip
+        fields = ['id', 'user', 'request_date', 'status', 'response_date']
