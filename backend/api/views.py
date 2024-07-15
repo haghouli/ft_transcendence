@@ -23,7 +23,7 @@ import requests
 import os
 import sys
 from django.utils import timezone
-from .customObjects import CustumeFriendShip
+from .customObjects import CustomeFriendShip, CustomeChatRoom
 # ---------------------------- functions ----------------------------
 
 def createTokenForUser(user):
@@ -71,7 +71,8 @@ def getCustomFriendship(friend_ships, user_id):
         tmp_user = None
         tmp_user = item.friend_ship_reciever if item.friend_ship_sender.id == user_id else item.friend_ship_sender
 
-        friend_ship = CustumeFriendShip(
+        friend_ship = CustomeFriendShip(
+            id=item.id,
             user=tmp_user,
             request_date=item.request_date,
             status=item.status,
@@ -79,7 +80,7 @@ def getCustomFriendship(friend_ships, user_id):
         )
         custom_friend_ships.append(friend_ship)
 
-    serializer = serializers.CustuomeFriendShipSerializer(custom_friend_ships, many=True)
+    serializer = serializers.CustomeChatRoomSerializer(custom_friend_ships, many=True)
     return serializer.data
 
 
@@ -304,7 +305,8 @@ class getPandingFriendRequestsView(APIView):
         custom_friend_ships = []
         for item in friend_requests_received:
 
-            friend_ship = CustumeFriendShip(
+            friend_ship = CustomeFriendShip(
+                id=item.id,
                 user=item.friend_ship_sender,
                 request_date=item.request_date,
                 status=item.status,
@@ -407,13 +409,30 @@ class getChatRoomLast20MessagesView(APIView):
     
 class getUserChatRooms(APIView):
 
-    authentication_classes = [JWTAuthentication]
-    permission_classes = [IsAuthenticated]
+    # authentication_classes = [JWTAuthentication]
+    # permission_classes = [IsAuthenticated]
+
+    authentication_classes = []
+    permission_classes = [AllowAny]
 
     def get(self, request, id):
 
         user_rooms = models.chatRoom.objects.filter(Q(user1__id=id) | Q(user2__id=id))
-        serializer = serializers.ChatRoomSerializer(user_rooms, many=True) 
+        # serializer = serializers.ChatRoomSerializer(user_rooms, many=True)
+
+        custom_user_rooms = []
+
+        for item in user_rooms:
+            tmp_user = item.user1 if item.user1.id != id else item.user2
+
+            custom_chat_room = CustomeChatRoom(
+                id=item.id,
+                user=tmp_user,
+            )
+            custom_user_rooms.append(custom_chat_room)
+
+        serializer = serializers.CustomeChatRoomSerializer(custom_user_rooms, many=True)
+
         return Response(serializer.data)
 
 

@@ -3,7 +3,7 @@ from . import models
 import sys
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
-from .customObjects import CustumeFriendShip
+from .customObjects import CustomeFriendShip, CustomeChatRoom
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     @classmethod
@@ -89,10 +89,18 @@ class ChatRoomSerializer(serializers.ModelSerializer):
         fields = ['id', 'user1', 'user2']
 
 
-class CustuomeFriendShipSerializer(serializers.ModelSerializer):
+class CustomeFriendShipSerializer(serializers.ModelSerializer):
 
     user = UserSerializer()
 
     class Meta:
-        model = CustumeFriendShip
+        model = CustomeFriendShip
         fields = ['id', 'user', 'request_date', 'status', 'response_date']
+    
+class CustomeChatRoomSerializer(serializers.ModelSerializer):
+
+    user = UserSerializer()
+
+    class Meta:
+        model = CustomeChatRoom
+        fields = ['id', 'user']
