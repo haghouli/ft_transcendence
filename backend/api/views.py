@@ -455,25 +455,6 @@ class deleteChatRoom(APIView):
             return Response({'message': 'chat room deleted successfully'})
         except:
             return Response({'error': 'invalid data'}, status=400)
-        
-
-def handleNotification(receiver_id):
-
-    if receiver_id in online_users:
-
-        print("i am here", file=sys.stderr)
-        channel_name = online_users[receiver_id]['channel_name']
-
-        group_name = "test_group"
-
-        channel_layer = get_channel_layer()
-        async_to_sync(channel_layer.group_add)(group_name, channel_name)
-        
-        async_to_sync(channel_layer.send)(group_name, {
-            "message": "hello"
-        })
-
-        async_to_sync(channel_layer.group_discard)(group_name, channel_name)
 
 class sendFriendView(APIView):
 
@@ -483,19 +464,17 @@ class sendFriendView(APIView):
     def post(self, request):
         try:
             sender_id = request.user.id
-            receiver_id = int(request.data.get('reciver_id'))
+            reciever_id = int(request.data.get('reciever_id'))
             # print(receiver_id, file=sys.stderr)
 
             sender = models.User.objects.get(pk=sender_id)
-            reveiver = models.User.objects.get(pk=receiver_id)
+            reciever = models.User.objects.get(pk=reciever_id)
 
             models.FriendShip.objects.create(
                 friend_ship_sender=sender,
-                friend_ship_reciever=reveiver,
+                friend_ship_reciever=reciever,
                 status=0
             )
-            
-            # handleNotification(receiver_id)
 
             return Response({'message' : 'friend request sended successfully'})
         except Exception as e:
