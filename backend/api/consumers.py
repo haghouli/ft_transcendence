@@ -6,12 +6,12 @@ from django.utils import timezone
 from .models import Message, chatRoom
 from .serializers import MessageSerializer
 import sys
+import uuid
 
 online_users = {}
 
 class ChatConsumer(AsyncWebsocketConsumer):
     async def connect(self):
-
 
         self.room_name = self.scope["url_route"]["kwargs"]["room_name"]
         self.room_group_name = f"chat_room_{self.room_name}"
@@ -108,13 +108,16 @@ class OnlineConsumer(AsyncWebsocketConsumer):
 
         if self.scope['user']:
             if self.scope['user'].id not in online_users:
-                # online_users[self.scope['user'].id]['counter'] = 1
-                # online_users[self.scope['user'].id]['channel_name'] = self.channel_name
-                online_users[self.scope['user'].id] = {'counter': 1, 'channel_name': self.channel_name}
+                self.group_name = f'group_name_{self.scope['user'].id}'
+                print(self.group_name, file=sys.stderr)
+                online_users[self.scope['user'].id] = {'counter': 1, 'channel_name': self.channel_name, 'group_name': self.group_name}
+                await self.channel_layer.group_add(self.group_name, self.channel_name)
                 await self.updata_user_status(True)
                 print(f'connect first time {online_users[self.scope['user'].id]['counter']}', file=sys.stderr)
             else:
                 online_users[self.scope['user'].id]['counter'] += 1
+                self.group_name = online_users[self.scope['user'].id]['group_name']
+                await self.channel_layer.group_add(self.group_name, self.channel_name)
                 print(f'connect another time {online_users[self.scope['user'].id]['counter']}', file=sys.stderr)
 
             await self.accept()
@@ -129,8 +132,12 @@ class OnlineConsumer(AsyncWebsocketConsumer):
             print(f'disconnect {online_users[self.scope['user'].id]['counter']}', file=sys.stderr)
             await self.updata_user_status(False)
             del online_users[self.scope['user'].id]
+            await self.channel_layer.group_discard(self.group_name, self.channel_name)
         else:
             print(f'disconnect {online_users[self.scope['user'].id]['counter']}', file=sys.stderr)
+    
+    async def send_notification(self, event):
+        await self.send(text_data=json.dumps({ 'message': event['message'] }))
 
     @database_sync_to_async
     def updata_user_status(self, is_online):

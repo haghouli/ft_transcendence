@@ -6,7 +6,7 @@ import os
 
 
 
-class CustumeFriendShip(models.Model):
+class CustomeFriendShip(models.Model):
 
     user = models.ForeignKey(
         User,
@@ -16,4 +16,14 @@ class CustumeFriendShip(models.Model):
     request_date = models.DateTimeField(auto_now=True)
     status = models.IntegerField()
     response_date = models.DateTimeField(blank=True, null=True)
+
+
+
+class CustomeChatRoom(models.Model):
+
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    def __str__(self) -> str:
+        return 'customchatroom_' + str(self.id)
+
 

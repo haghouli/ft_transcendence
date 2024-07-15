@@ -23,7 +23,7 @@ import requests
 import os
 import sys
 from django.utils import timezone
-from .customObjects import CustumeFriendShip
+from .customObjects import CustomeFriendShip, CustomeChatRoom
 # ---------------------------- functions ----------------------------
 
 def createTokenForUser(user):
@@ -71,7 +71,8 @@ def getCustomFriendship(friend_ships, user_id):
         tmp_user = None
         tmp_user = item.friend_ship_reciever if item.friend_ship_sender.id == user_id else item.friend_ship_sender
 
-        friend_ship = CustumeFriendShip(
+        friend_ship = CustomeFriendShip(
+            id=item.id,
             user=tmp_user,
             request_date=item.request_date,
             status=item.status,
@@ -79,7 +80,7 @@ def getCustomFriendship(friend_ships, user_id):
         )
         custom_friend_ships.append(friend_ship)
 
-    serializer = serializers.CustuomeFriendShipSerializer(custom_friend_ships, many=True)
+    serializer = serializers.CustomeChatRoomSerializer(custom_friend_ships, many=True)
     return serializer.data
 
 
@@ -304,7 +305,8 @@ class getPandingFriendRequestsView(APIView):
         custom_friend_ships = []
         for item in friend_requests_received:
 
-            friend_ship = CustumeFriendShip(
+            friend_ship = CustomeFriendShip(
+                id=item.id,
                 user=item.friend_ship_sender,
                 request_date=item.request_date,
                 status=item.status,
@@ -407,13 +409,30 @@ class getChatRoomLast20MessagesView(APIView):
     
 class getUserChatRooms(APIView):
 
-    authentication_classes = [JWTAuthentication]
-    permission_classes = [IsAuthenticated]
+    # authentication_classes = [JWTAuthentication]
+    # permission_classes = [IsAuthenticated]
+
+    authentication_classes = []
+    permission_classes = [AllowAny]
 
     def get(self, request, id):
 
         user_rooms = models.chatRoom.objects.filter(Q(user1__id=id) | Q(user2__id=id))
-        serializer = serializers.ChatRoomSerializer(user_rooms, many=True) 
+        # serializer = serializers.ChatRoomSerializer(user_rooms, many=True)
+
+        custom_user_rooms = []
+
+        for item in user_rooms:
+            tmp_user = item.user1 if item.user1.id != id else item.user2
+
+            custom_chat_room = CustomeChatRoom(
+                id=item.id,
+                user=tmp_user,
+            )
+            custom_user_rooms.append(custom_chat_room)
+
+        serializer = serializers.CustomeChatRoomSerializer(custom_user_rooms, many=True)
+
         return Response(serializer.data)
 
 
@@ -455,25 +474,6 @@ class deleteChatRoom(APIView):
             return Response({'message': 'chat room deleted successfully'})
         except:
             return Response({'error': 'invalid data'}, status=400)
-        
-
-def handleNotification(receiver_id):
-
-    if receiver_id in online_users:
-
-        print("i am here", file=sys.stderr)
-        channel_name = online_users[receiver_id]['channel_name']
-
-        group_name = "test_group"
-
-        channel_layer = get_channel_layer()
-        async_to_sync(channel_layer.group_add)(group_name, channel_name)
-        
-        async_to_sync(channel_layer.send)(group_name, {
-            "message": "hello"
-        })
-
-        async_to_sync(channel_layer.group_discard)(group_name, channel_name)
 
 class sendFriendView(APIView):
 
@@ -483,19 +483,17 @@ class sendFriendView(APIView):
     def post(self, request):
         try:
             sender_id = request.user.id
-            receiver_id = int(request.data.get('reciver_id'))
+            reciever_id = int(request.data.get('reciever_id'))
             # print(receiver_id, file=sys.stderr)
 
             sender = models.User.objects.get(pk=sender_id)
-            reveiver = models.User.objects.get(pk=receiver_id)
+            reciever = models.User.objects.get(pk=reciever_id)
 
             models.FriendShip.objects.create(
                 friend_ship_sender=sender,
-                friend_ship_reciever=reveiver,
+                friend_ship_reciever=reciever,
                 status=0
             )
-            
-            # handleNotification(receiver_id)
 
             return Response({'message' : 'friend request sended successfully'})
         except Exception as e:
