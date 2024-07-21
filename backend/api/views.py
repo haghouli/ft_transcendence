@@ -3,88 +3,23 @@ from django.http.response import HttpResponse
 
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework.exceptions import AuthenticationFailed
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.authentication import JWTAuthentication
-from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.permissions import AllowAny
-from .consumers import online_users
-
-from channels.layers import get_channel_layer
-from asgiref.sync import async_to_sync
 
 from . import serializers
 from . import models
 
-from django.conf import settings
 from django.db.models import Q
-import requests
-
 import os
 import sys
 from django.utils import timezone
 from .customObjects import CustomeFriendShip, CustomeChatRoom
-# ---------------------------- functions ----------------------------
-
-def createTokenForUser(user):
-    refresh = RefreshToken.for_user(user)
-    return {
-        'refresh': str(refresh),
-        'access': str(refresh.access_token),
-    }
-
-
-def getIntraUser(request):
-    code = request.data.get('code')
-    myrequest = requests.post(settings.INTRA_API, data={
-        'grant_type': 'authorization_code',
-        'client_id': settings.INTRA_UID,
-        'client_secret': settings.INTRA_SECRET,
-        'code': code,
-        'redirect_uri': settings.BACKEND_URL,
-    })
-    if myrequest.status_code != 200:
-        return None
-    data = myrequest.json()
-    access_token = data['access_token']
-    myrequest2 = requests.get('https://api.intra.42.fr/v2/me', headers={
-        'Authorization' : 'bearer {}'.format(access_token),
-    })
-    if myrequest2.status_code != 200:
-        return None
-    res_json = myrequest2.json()
-    return res_json
-
-
-def saveIntraUserImage(image_url, file_name):
-    save_path = os.path.join(settings.BASE_DIR,'media', file_name)
-    response = requests.get(image_url)
-    if response.status_code == 200:
-        with open(save_path, 'wb') as f:
-            f.write(response.content)
-
-
-def getCustomFriendship(friend_ships, user_id):
-
-    custom_friend_ships = []
-    for item in friend_ships:
-        tmp_user = None
-        tmp_user = item.friend_ship_reciever if item.friend_ship_sender.id == user_id else item.friend_ship_sender
-
-        friend_ship = CustomeFriendShip(
-            id=item.id,
-            user=tmp_user,
-            request_date=item.request_date,
-            status=item.status,
-            response_date=item.response_date,
-        )
-        custom_friend_ships.append(friend_ship)
-
-    serializer = serializers.CustomeChatRoomSerializer(custom_friend_ships, many=True)
-    return serializer.data
+from .utiles import createTokenForUser, getIntraUser, saveIntraUserImage, getCustomFriendship
 
 
 # ---------------------------- views ----------------------------
+
 
 class verify_user(APIView):
 
@@ -109,14 +44,13 @@ class intraLoginView(APIView):
         if res_json is None:
             return Response({'error': 'Invalid login'}, status=400)
 
-        id = res_json['id']
         first_name = res_json['first_name']
         last_name = res_json['last_name']
         email = res_json['email']
         username = res_json['login']
         image_url = res_json['image']['link']
 
-        user = models.User.objects.filter(username=username, id=id).first()
+        user = models.User.objects.filter(email=email).first()
         if user is not None:
             token = createTokenForUser(user)
             user_serializer = serializers.UserSerializer(user)
@@ -130,7 +64,6 @@ class intraLoginView(APIView):
         saveIntraUserImage(image_url, file_name)
     
         new_instance = models.User(
-            id=id,
             username=username,
             first_name=first_name,
             last_name=last_name,
@@ -270,11 +203,8 @@ class getFriendsView(APIView):
 
 class getOnlineFriendsView(APIView):
 
-    # authentication_classes = [JWTAuthentication]
-    # permission_classes = [IsAuthenticated]
-
-    authentication_classes = []
-    permission_classes = [AllowAny]
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
 
     def get(self, request, id):
 
@@ -409,11 +339,8 @@ class getChatRoomLast20MessagesView(APIView):
     
 class getUserChatRooms(APIView):
 
-    # authentication_classes = [JWTAuthentication]
-    # permission_classes = [IsAuthenticated]
-
-    authentication_classes = []
-    permission_classes = [AllowAny]
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
 
     def get(self, request, id):
 

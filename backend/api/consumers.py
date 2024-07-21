@@ -7,6 +7,7 @@ from .models import Message, chatRoom
 from .serializers import MessageSerializer
 import sys
 import uuid
+import random, string
 
 online_users = {}
 
@@ -150,3 +151,74 @@ class OnlineConsumer(AsyncWebsocketConsumer):
             print(e, file=sys.stderr)
 
 
+counter = 0
+
+def getRandomString(n):
+    return ''.join(random.choices(string.ascii_uppercase + string.digits, k=n))
+
+class GameConsumer(AsyncWebsocketConsumer):
+
+    async def send_notification_to_other(self, event):
+        if self.channel_name != event['current_channel_name']:
+            await self.send(text_data=json.dumps({
+                'message': event['message'],
+                'action' : event['action'],
+                'index' : event['index'],
+            }))
+    
+    async def send_notification_to_all(self, event):
+        await self.send(text_data=json.dumps({
+            'message': event['message'],
+            'action': event['action'],
+        }))
+
+    async def connect(self):
+        global counter
+        print(counter, file=sys.stderr)
+        await self.accept()
+        self.group_name = 'tic_tac_toe'
+        await self.channel_layer.group_add(self.group_name, self.channel_name)
+        counter += 1
+        if counter == 2:
+            await self.channel_layer.group_send(self.group_name, {
+                'type': 'send_notification_to_other',
+                'action': 'match_found',
+                'message': 'match_found',
+                'current_channel_name': self.channel_name,
+                'index' : '0',
+            })
+        # print("A new user joined", file=sys.stderr)
+
+    async def receive(self, text_data):
+        global counter
+        text_data_json = json.loads(text_data)
+
+        print('i receive', file=sys.stderr)
+        
+        if text_data_json['action'] == 'game_over':
+            await self.channel_layer.group_send(self.group_name,  {
+                'type': 'send_notification_to_all',
+                'action' : 'game_over',
+                'message' : text_data_json['message'],
+            })
+            await self.channel_layer.group_discard(self.group_name, self.channel_name)
+        elif text_data_json['action'] == 'make_move':
+            await self.channel_layer.group_send(self.group_name,  {
+                'type': 'send_notification_to_other',
+                'message' : text_data_json['message'],
+                'action' : text_data_json['action'],
+                'current_channel_name' : self.channel_name,
+                'index': text_data_json['index'],
+            })
+
+
+    async def disconnect(self, code):
+        global counter
+        # print("A user disconnected", file=sys.stderr)
+        # await self.channel_layer.group_send(self.group_name, {
+        #     'type': 'send_notification',
+        #     'message': 'A user left',
+        #     'current_channel_name': self.channel_name,
+        # })
+        await self.channel_layer.group_discard(self.group_name, self.channel_name)
+        counter -= 1

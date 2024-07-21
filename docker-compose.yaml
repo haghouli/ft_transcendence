@@ -10,7 +10,17 @@ services:
       - 8000:8000
     volumes:
       - backend:/my_app
-    
+
+    environment:
+      - INTRA_UID=${INTRA_UID}
+      - INTRA_SECRET=${INTRA_SECRET}
+      - BACKEND_URL=${BACKEND_URL}
+      - INTRA_API=${INTRA_API}
+      - DB_NAME=${DB_NAME}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_HOST=${DB_HOST}
+      - DB_PORT=${DB_PORT}
 
   frontend:
     image: nginx
@@ -30,9 +40,9 @@ services:
   #   ports:
   #     - 5432:5432
   #   environment:
-  #     POSTGRES_PASSWORD: 'hicham1234'
-  #     POSTGRES_USER: 'hicham'
-  #     POSTGRES_DB: 'mydb'
+  #     POSTGRES_PASSWORD=${DB_PASSWORD}
+  #     POSTGRES_USER=${DB_USER}
+  #     POSTGRES_DB:=${DB_NAME}
 
 
   # adminer:
@@ -57,8 +67,9 @@ volumes:
     driver_opts:
       type: none
       o: bind
-      device: /home/haghouli/Desktop/ft_transcendence/backend/
+      # device: /home/haghouli/Desktop/ft_transcendence/backend/
       # device: /nfs1/homes/haghouli/Desktop/ft_transcendence/backend/
+      device: C:\Users\HiChaM\Desktop\Files\ft_transcendence\backend\
   
 
   frontend:
@@ -67,5 +78,6 @@ volumes:
     driver_opts:
       type: none
       o: bind
-      device: /home/haghouli/Desktop/ft_transcendence/frontend/
+      # device: /home/haghouli/Desktop/ft_transcendence/frontend/
       # device: /nfs1/homes/haghouli/Desktop/ft_transcendence/frontend/
+      device: C:\Users\HiChaM\Desktop\Files\ft_transcendence\frontend\
