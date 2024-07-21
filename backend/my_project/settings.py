@@ -179,12 +179,10 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'api.User'
 
-JWT_SECRET   = 'my_secret'
-INTRA_UID    = 'u-s4t2ud-7442b875083283b731c9dc5d4f86a28e615632e18b679667bd0714bbdbbad09f'
-INTRA_SECRET = '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'
-BACKEND_URL  = 'http://127.0.0.1:3001/'
-INTRA_API    = 'https://api.intra.42.fr/oauth/token'
-
+INTRA_UID    = os.environ.get('INTRA_UID')
+INTRA_SECRET = os.environ.get('INTRA_SECRET')
+BACKEND_URL  = os.environ.get('BACKEND_URL')
+INTRA_API    = os.environ.get('INTRA_API')
 
 
 # simple jwt
