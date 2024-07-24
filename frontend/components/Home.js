@@ -1,67 +1,66 @@
 import { fetchData } from  "../utilities/fetch.js";
 import user from "../utilities/user.js";
-import { BACKEND_BASE_URL, TOKEN } from '../utilities/var.js'
-
-
-const logout = () => {
-    localStorage.removeItem(TOKEN)
-    window.history.pushState({}, "", "#/login")
-    user.data = null
-    user.islogged = false
-}
 
 export default class HomeComponent {
     constructor() {
         this.cssPath = "./css/Home.css";
-        this.username = user.data.username;
-        this.avatar = user.data.avatar;
+        this.firstname = 'aa';
+        this.lastname = 'aa';
     }
 
     getCssPath = () => {
         return this.cssPath;
     }
 
-    init(){
-        const userName = document.getElementById('user_name');
-        const image = document.getElementById("user-image");
+    logOutFunc() {
+        document.getElementById('logout').addEventListener('click', () => {
+            user.islogged = false;
+            window.history.pushState({}, "", "#/login")
+            window.dispatchEvent(new Event('hashchange'));
+        });
+    }
 
-        document.getElementById("logout-btn").addEventListener('click', () => {
-            logout();
-        })
-        
-        image.src = `${BACKEND_BASE_URL}${this.avatar}`;
-        userName.textContent = this.username ;
-    
+    init(){
+        this.logOutFunc();
     }
     
     async render() {
         return `
-           <div class="main-image">
-                <h1>Welcome to Our Game</h1>
-                <a href="#/game" class="play-now">Play Now</a>
-                </div>
-                <div class="side-images">
-                    <div class="side-images-img">
-                       <h1>Play With <br><span>AI</span></h1>
+                     <div class="spa-left">
+                        <div class="main-image">
+                            <div class="play-image"> 
+                                <img src="./images/image.png" alt="" class="main-image-img">
+                                <h1>Welcome to Our Game</h1>
+                                <p>welcome to enjoy your time width your friends <br>
+                                feel ree to try what you want</p>
+                                <a href="#/game" class="play-now">Play Now</a>
+                            </div>
+                            <div class="fr-rank">
+                                <!-- <h6>Top 3 Players</h6>
+                                <h1>player 1</h1>
+                                <h1>player 2</h1>
+                                <h1>player 3</h1>
+                                <h1>player 3</h1> -->
+                            </div>
+                        </div>
+                        <!-- <h1 >game Mode</h1> -->
+                        <div class="side-images">
+                            <div class="modes">
+                                <h1>Game Modes</h1>
+                            </div>
+                            <div class="image-collection">
+                                <div class="side-images-img" id="paly-ai">
+                                   <h1>Play With <br><span>AI</span><br>Mode</h1>
+                                </div>
+                                <div class="side-images-img" id="tour">
+                                    <h1>Play<br><span>Tournament</span><br>Mode</h1>
+                                </div>
+                                <div class="side-images-img" id="game">
+                                   <h1>Play<br><span>Game</span><br>Mode</h1>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="side-images-img">
-                        <h1>Play<br><span>tournament</span></h1>
-                    </div>
-                    <div class="side-images-img">
-                       <h1>Play<br><span>Game</span></h1>
-                    </div>
-                </div>
-                <div class="user-info">
-                    <h2 style="font-size: 20px;">Join a tournament</h2>
-                    <!-- <h1>information</h1>
-                    <h1>information</h1>
-                    <h1>information</h1>
-                    <h1>information</h1>
-                    <h1>information</h1>
-                    <h1>information</h1>
-                    <h1>information</h1> -->
-                </div>
-            </div>
         `;
     }
 }
