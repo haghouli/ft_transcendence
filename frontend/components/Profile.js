@@ -1,5 +1,4 @@
 import { fetchData } from  "../utilities/fetch.js";
-import { BACKEND_BASE_URL } from "../utilities/var.js";
 
 export default class ProfileComponent {
     constructor(){
@@ -10,171 +9,60 @@ export default class ProfileComponent {
         return this.cssPath;
     }
 
-    async fetchDataAsync() {
-        console.log('fetchdata')
-        try {
-            const data = await fetchData('../api/data.json');
-        } catch (error) {
-            console.error('Error fetching data:', error);
-        }
-    }
 
     init() {
-        document.getElementById('profile-image').src = `${BACKEND_BASE_URL}${user.data.avatar}`;
-        document.getElementById('profile-username').textContent = user.data.username;
+        
     }
     
     async render() {
         return `
-                <div id="prof">
-                    <div class="prof-img">
-                        <div class="prof-img-img">
-                            <img src="./images/avatar.png" id="profile-image" alt="">
+                   <div class="profile-body">
+                           <div class="pr-up"> 
+                                <!-- <img src="./images/sky.avif" alt=""> -->
+                           </div>
+                           <div class="pr-down">
+                                <div class="uer-pr-image">
+                                    <img src="./images/avatar.png" alt="">
+                                </div>
+                                <div class="void"> </div>
+                                <div class="user-pr-info">
+                                    <div class="info">
+                                        <div class="user-pr-login">
+                                            <h1>mtadlaou</h1>
+                                        </div>
+                                        <div class="rank-container">
+                                            <div class="rank-info">
+                                                <h1>Wins</h1>
+                                                <h1>15</h1>
+                                            </div>
+                                            <div class="rank-info">
+                                                <h1>Loses</h1>
+                                                <h1>5</h1>
+                                            </div>
+                                            <div class="rank-info">
+                                                <h1>played</h1>
+                                                <h1>20</h1>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="level-bar">
+                                        <div class="level-fill"></div>
+                                        <span class="level-text">Level 10%</span>
+                                    </div>
+                                </div>
+                           </div>
+                    </div>
+                    <div class="game-status">
+                        <div class="game-container">
+                            <h1>match history data</h1>
                         </div>
-                        <h1 id="profile-username">jon Doe</h1>
-                    </div>
-                    <div class="rank">
-                        <div class="info">
-                            <div class="rank-info">
-                                <h1>Win</h1>
-                                <h1>15</h1>
-                            </div>
-                            <div class="rank-info">
-                                <h1>Loses</h1>
-                                <h1>6</h1>
-                            </div>
-                            <div class="rank-info">
-                                <h1>total</h1>
-                                <h1>50</h1>
-                            </div>
+                        <div class="game-container">
+                            <h1> leaderboard </h1>
                         </div>
-                        <div class="level-bar">
-                            <div class="level-fill"></div>
-                            <span class="level-text">Level 10%</span>
+                        <div class="game-container">
+                            <h1>achievements</h1>
                         </div>
                     </div>
-                </div>
-                <h4>Your achievement</h4>
-                <div class="line"></div>
-                <div class="users">
-                    <div class="saver">
-                        <h3>Player</h3>
-                    </div>
-                    <div class="saver">
-                        <h3>GamePlayed</h3>
-                    </div>
-                    <div class="saver">
-                        <h3>level</h3>
-                    </div>
-                    <div class="saver">
-                        <h3>status</h3>
-                    </div> 
-                </div>
-                <div class="achiev-user">
-                    <div class="saver">
-                        <div class="user-pict">
-                        <img src="./images/assassins.png" alt="">
-                        <h3>john dDoe</h3>
-                    </div>
-                    </div>
-                    <div class="saver">
-                        <h3>20 </h3>
-                    </div> 
-                    <div class="saver">
-                        <h3>60%</h3>
-                    </div> 
-                    <div class="saver">
-                        <h3>active</h3>
-                    </div> 
-                </div>
-                <div class="achiev-user">
-                    <div class="saver">
-                        <div class="user-pict">
-                        <img src="./images/assassins.png" alt="">
-                        <h3>john dDoe</h3>
-                    </div>
-                    </div>
-                    <div class="saver">
-                        <h3>20 </h3>
-                    </div> 
-                    <div class="saver">
-                        <h3>60%</h3>
-                    </div> 
-                    <div class="saver">
-                        <h3>active</h3>
-                    </div> 
-                </div>
-                <div class="achiev-user">
-                    <div class="saver">
-                        <div class="user-pict">
-                        <img src="./images/assassins.png" alt="">
-                        <h3>john dDoe</h3>
-                    </div>
-                    </div>
-                    <div class="saver">
-                        <h3>20 </h3>
-                    </div> 
-                    <div class="saver">
-                        <h3>60%</h3>
-                    </div> 
-                    <div class="saver">
-                        <h3>active</h3>
-                    </div> 
-                </div>
-                <div class="achiev-user">
-                    <div class="saver">
-                        <div class="user-pict">
-                        <img src="./images/assassins.png" alt="">
-                        <h3>john dDoe</h3>
-                    </div>
-                    </div>
-                    <div class="saver">
-                        <h3>20 </h3>
-                    </div> 
-                    <div class="saver">
-                        <h3>60%</h3>
-                    </div> 
-                    <div class="saver">
-                        <h3>active</h3>
-                    </div> 
-                </div>
-                <div class="achiev-user">
-                    <div class="saver">
-                        <div class="user-pict">
-                        <img src="./images/assassins.png" alt="">
-                        <h3>john dDoe</h3>
-                    </div>
-                    </div>
-                    <div class="saver">
-                        <h3>20 </h3>
-                    </div> 
-                    <div class="saver">
-                        <h3>60%</h3>
-                    </div> 
-                    <div class="saver">
-                        <h3>active</h3>
-                    </div> 
-                </div>
-                <div class="achiev-user">
-                    <div class="saver">
-                        <div class="user-pict">
-                        <img src="./images/assassins.png" alt="">
-                        <h3>mtadlaou</h3>
-                    </div>
-                    </div>
-                    <div class="saver">
-                        <h3>20 </h3>
-                    </div> 
-                    <div class="saver">
-                        <h3>60%</h3>
-                    </div> 
-                    <div class="saver">
-                        <h3>active</h3>
-                    </div> 
-                </div>
-                <!-- <div class="achiev-user"></div>
-                <div class="achiev-user"></div>
-                <div class="achiev-user"></div> -->
         `;
     }
 }

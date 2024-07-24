@@ -25,6 +25,8 @@ main{
     padding-bottom: 3rem;
     height: 100vh;
     display: flex;
+    align-items: center;
+    justify-content: center;
     
 }
 
@@ -33,10 +35,6 @@ main{
     width: 100%;
     display: flex;
     align-items: center;
-    background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),url('../images/img1.jpg');
-    background-size: cover;
-    background-position: center;
-    padding: 2rem 0.6rem;
 }
 
 
@@ -51,28 +49,19 @@ main{
 }
 
 .middle {
-    flex-basis: 86%
-}
-
-.right{
-    flex-basis: 7%;
+    flex-basis: 93%
 }
 
 
 /********************** left **********************/
 .left {
-    height: 97%;
+    height: 100%;
     background: #3b3640;
     display: flex;
     align-items: center;
     flex-direction: column;
     justify-content: space-between;
-    padding: 4rem 0;
-    background: rgba(112, 97, 97, 0.27);
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-    backdrop-filter: blur(6px);
-    -webkit-backdrop-filter: blur(6px);
-    border-radius: 1rem;
+    padding: 5rem 0;
 }
 
 .left-top{
@@ -173,7 +162,6 @@ span{
 .logout i{
     font-size: 23px;
     color: var(--text-color);
-    cursor: pointer;
 }
 
 
@@ -186,7 +174,7 @@ span{
     flex-direction: column;
     gap: 2rem;
     height: 100%;
-    padding: 3.6rem 3rem 1rem 3rem;
+    padding: 3.6rem 3rem 3rem 3rem;
     border-top-right-radius: 2rem;
 }
 
@@ -306,7 +294,7 @@ span{
 .spa-left{
     height: 100%;
     /* border: 1px solid; */
-    flex-basis: 100%;
+    flex-basis: 80%;
     display: flex;
     flex-direction: column;
     gap: 4rem;
@@ -319,13 +307,12 @@ span{
     color: white;
     text-align: center;
     gap: 3rem;
-    position: relative;
 }
 
 .main-image-img {
     position: absolute;
-    right: -6%;
-    top: -35%;
+    right: 41%;
+    top: 4.8%;
 }
 
 .play-image {
@@ -346,12 +333,6 @@ span{
         0 4px 8px rgba(0, 0, 0, 0.3),  /* Basic shadow */
         0 12px 16px rgba(0, 0, 0, 0.2),  /* Larger shadow for depth */
         0 24px 32px rgba(0, 0, 0, 0.1);  /* Even larger shadow for more depth */
-        background: rgba(112, 97, 97, 0.27);
-        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-        backdrop-filter: blur(6px);
-        -webkit-backdrop-filter: blur(6px);
-    
-    
 }
 
 .fr-rank{
@@ -368,10 +349,6 @@ span{
     gap: 0.5rem;
     align-items: center; 
      justify-content: center;
-     background: rgba(112, 97, 97, 0.27);
-     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-     backdrop-filter: blur(6px);
-     -webkit-backdrop-filter: blur(6px);
 }
 
 .fr-rank h1{
@@ -458,28 +435,7 @@ a.play-now:hover {
     align-items: center;
     justify-content: center;
     text-align: center;
-    /* background: rgba(112, 97, 97, 0.27);
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-    backdrop-filter: blur(6px);
-    -webkit-backdrop-filter: blur(6px); */
 }
-
-/* #paly-ai{
-    background-image: linear-gradient(rgba(39, 36, 36, 0.1), rgba(2, 2, 2, 0.1)),url('./images/OIG3.jpeg');
-    object-fit: cover;
-    /* background-size: cover;
-*/
-/* #tour{
-    background-image: linear-gradient(rgba(39, 36, 36, 0.1), rgba(2, 2, 2, 0.1)),url('./images/OIG2.jpeg');
-    background-size: cover;
-    background-position: center;
-} */
-
-/* #game{
-    background-image: linear-gradient(rgba(39, 36, 36, 0.1), rgba(2, 2, 2, 0.1)),url('./images/OIG2.jpeg');
-    background-size: cover;
-    background-position: center;
-}  */
 
 .side-images-img:hover {
     transform: scale(1.05);
@@ -497,10 +453,6 @@ a.play-now:hover {
     display: flex;
     flex-direction: column;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-    background: rgba(112, 97, 97, 0.27);
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-    backdrop-filter: blur(6px);
-    -webkit-backdrop-filter: blur(6px);
 }
 
 .spa-right-top{
@@ -602,68 +554,3 @@ a.play-now:hover {
 }
 
 
-
-
-/*************************** right ************************/
-.right {
-    height: 97%;
-    background: #3b3640;
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    padding: 4rem 0;
-    background: rgba(112, 97, 97, 0.27);
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-    backdrop-filter: blur(6px);
-    -webkit-backdrop-filter: blur(6px);
-    border-radius: 1rem;
-}
-
-.fr-img {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    /* height: 60px; */
-	/* width: 60px; */
-    position: relative;
-}
-
-.right .online_icon {
-	position: absolute;
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background: green;
-    bottom: 2px;
-    right: 2px;
-    border: 2px solid white;
-}
-
-.fr-img img {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    object-fit: cover;
-}
-
-.right i{
-    color: var(--text-color);
-    font-size: 22px;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5), 
-                 0 0 10px rgba(0, 255, 255, 0.5),
-                 0 0 20px rgba(0, 255, 255, 0.5),
-                 0 0 30px rgba(0, 255, 255, 0.5);
-    margin-bottom: 2rem;
-}
-
-.right h1{
-    color: var(--text-color);
-    font-size: 22px;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5), 
-                 0 0 10px rgba(0, 255, 255, 0.5),
-                 0 0 20px rgba(0, 255, 255, 0.5),
-                 0 0 30px rgba(0, 255, 255, 0.5);
-    margin-bottom: 2rem;
-}
