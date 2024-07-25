@@ -1,5 +1,5 @@
 export const editField = (fieldName) => {
-    // console.log('ici');
+    console.log('ici');
     var inputField = document.getElementById(fieldName);
     
     if (inputField.hasAttribute('readonly')) {

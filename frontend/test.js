@@ -6,6 +6,6 @@ const updateCss = (newCssPath) => {
 };
 
 document.getElementById('btn').addEventListener('click', () => {
-
+    console.log('click');
     updateCss("./example.css");
 });
