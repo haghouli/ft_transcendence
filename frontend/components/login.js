@@ -35,7 +35,7 @@ const intraLogin = async (code) => {
 export default class loginComponent {
     constructor() {
         this.cssPath = "./css/Login.css";
-        getQuerryStrings();
+        // getQuerryStrings();
     }
 
     getCssPath = () => {
@@ -71,7 +71,7 @@ export default class loginComponent {
     // }
 
     intraLoginClickHandler = () => {
-        const alinkUrl = "https://api.intra.42.fr/oauth/authorize?client_id=u-s4t2ud-7442b875083283b731c9dc5d4f86a28e615632e18b679667bd0714bbdbbad09f&redirect_uri=http%3A%2F%2F127.0.0.1%3A3001%2F&response_type=code";
+        const alinkUrl = "https://api.intra.42.fr/oauth/authorize?client_id=u-s4t2ud-7442b875083283b731c9dc5d4f86a28e615632e18b679667bd0714bbdbbad09f&redirect_uri=http%3A%2F%2F127.0.0.1%3A8000%2Fapi%2Fintra_callback%2F&response_type=code";
         window.location.href = alinkUrl;
     }
    

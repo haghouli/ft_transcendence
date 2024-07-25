@@ -12,7 +12,7 @@ urlpatterns = [
     path("users/", views.getUsersView.as_view(), name="users"),
 
     path("register/", views.registerView.as_view(), name="register"),
-    path("intra_login/", views.intraLoginView.as_view(), name="intra_login"),
+    # path("intra_login/", views.intraLoginView.as_view(), name="intra_login"),
 
     path('users/add_user/', views.addUserView.as_view(), name="add_user"),
     path('users/user/<int:id>', views.userView.as_view(), name='user'),
@@ -40,5 +40,7 @@ urlpatterns = [
 
     path('chat_rooms/room/', views.createChatRoom.as_view(), name='create_chat_room'),
     path('chat_rooms/room/<int:id>', views.deleteChatRoom.as_view(), name='delete_chat_room'),
+
+    path('intra_callback/',  views.intraCallBack.as_view(), name='intra_login'),
 
 ]

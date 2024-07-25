@@ -8,13 +8,12 @@ from .customObjects import CustomeFriendShip
 def createTokenForUser(user):
     refresh = RefreshToken.for_user(user)
     return {
-        'refresh': str(refresh),
-        'access': str(refresh.access_token),
+        "refresh": str(refresh),
+        "access": str(refresh.access_token),
     }
 
 
-def getIntraUser(request):
-    code = request.data.get('code')
+def getIntraUser(code):
     myrequest = requests.post(settings.INTRA_API, data={
         'grant_type': 'authorization_code',
         'client_id': settings.INTRA_UID,

@@ -8,12 +8,16 @@ import { fetchData } from "../utilities/fetch.js";
 // *****************************************************
 const checkToken = async () => {
 
-    const token = JSON.parse(getCookie(TOKEN));
+    const token = getCookie(TOKEN)
+
+    // console.log(cookie);
+
+    // const token = JSON.parse(cookie);
     if (token !== null) {
         const response = await fetch(`${BACKEND_BASE_URL}/api/token/verify/`, {
             method: 'POST',
             headers: {
-                'Authorization': `Bearer ${token.access}`,
+                'Authorization': `Bearer ${token}`,
             },
         });
         const data = await response.json();

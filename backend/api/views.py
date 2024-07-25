@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http.response import HttpResponse
 
 from rest_framework.response import Response
@@ -17,9 +17,116 @@ from django.utils import timezone
 from .customObjects import CustomeFriendShip, CustomeChatRoom
 from .utiles import createTokenForUser, getIntraUser, saveIntraUserImage, getCustomFriendship
 
+import json
 
 # ---------------------------- views ----------------------------
 
+# class intraLoginView(APIView):
+
+#     authentication_classes = [] 
+#     permission_classes = [AllowAny] 
+
+#     def post(self, request):
+#         res_json = getIntraUser(request)
+#         if res_json is None:
+#             return Response({'error': 'Invalid login'}, status=400)
+
+#         first_name = res_json['first_name']
+#         last_name = res_json['last_name']
+#         email = res_json['email']
+#         username = res_json['login']
+#         image_url = res_json['image']['link']
+
+#         user = models.User.objects.filter(email=email).first()
+#         if user is not None:
+#             token = createTokenForUser(user)
+#             user_serializer = serializers.UserSerializer(user)
+#             return Response({
+#                 'tokens': token, 
+#                 'user': user_serializer.data,
+#                 'message': 'User already exists'
+#             })
+    
+#         file_name = 'uploads/' + username + '.jpg'
+#         saveIntraUserImage(image_url, file_name)
+    
+#         new_instance = models.User(
+#             username=username,
+#             first_name=first_name,
+#             last_name=last_name,
+#             email=email,
+#             avatar=file_name,
+#         )
+
+#         new_instance.save()
+
+#         user = models.User.objects.get(username=username)
+#         user_serializer = serializers.UserSerializer(user)
+#         token = createTokenForUser(user)
+
+#         return Response({
+#             'tokens': token,
+#             'user': user_serializer.data,
+#             'message': 'User created successfully'
+#         })
+
+
+def set_cookie(value, response):
+    response.set_cookie('my_token', value['access'])
+
+
+
+def intraLogin(code):
+    res_json = getIntraUser(code)
+    if res_json is None:
+        return Response({'error': 'Invalid login'}, status=400)
+
+    first_name = res_json['first_name']
+    last_name = res_json['last_name']
+    email = res_json['email']
+    username = res_json['login']
+    image_url = res_json['image']['link']
+
+    user = models.User.objects.filter(email=email).first()
+    if user is not None:
+        token = createTokenForUser(user)
+
+        response = redirect('http://127.0.0.1:3001/')
+        set_cookie(token, response)
+        return response
+
+    file_name = 'uploads/' + username + '.jpg'
+    saveIntraUserImage(image_url, file_name)
+
+    new_instance = models.User(
+        username=username,
+        first_name=first_name,
+        last_name=last_name,
+        email=email,
+        avatar=file_name,
+    )
+
+    new_instance.save()
+    user = models.User.objects.get(username=username)
+    token = createTokenForUser(user)
+
+    response = redirect('http://127.0.0.1:3001/')
+    set_cookie(token, response)
+    return response
+
+
+class intraCallBack(APIView):
+
+    authentication_classes = []
+    permission_classes = [AllowAny]
+
+    def get(self, request):
+        code = request.query_params.get('code')
+        response = intraLogin(code)
+
+        return response
+
+        
 
 class verify_user(APIView):
 
@@ -34,54 +141,6 @@ class verify_user(APIView):
 
         return Response(serialiser.data)
 
-class intraLoginView(APIView):
-
-    authentication_classes = [] 
-    permission_classes = [AllowAny] 
-
-    def post(self, request):
-        res_json = getIntraUser(request)
-        if res_json is None:
-            return Response({'error': 'Invalid login'}, status=400)
-
-        first_name = res_json['first_name']
-        last_name = res_json['last_name']
-        email = res_json['email']
-        username = res_json['login']
-        image_url = res_json['image']['link']
-
-        user = models.User.objects.filter(email=email).first()
-        if user is not None:
-            token = createTokenForUser(user)
-            user_serializer = serializers.UserSerializer(user)
-            return Response({
-                'tokens': token, 
-                'user': user_serializer.data,
-                'message': 'User already exists'
-            })
-    
-        file_name = 'uploads/' + username + '.jpg'
-        saveIntraUserImage(image_url, file_name)
-    
-        new_instance = models.User(
-            username=username,
-            first_name=first_name,
-            last_name=last_name,
-            email=email,
-            avatar=file_name,
-        )
-
-        new_instance.save()
-
-        user = models.User.objects.get(username=username)
-        user_serializer = serializers.UserSerializer(user)
-        token = createTokenForUser(user)
-
-        return Response({
-            'tokens': token,
-            'user': user_serializer.data,
-            'message': 'User created successfully'
-        })
 
 class registerView(APIView):
 
@@ -469,4 +528,3 @@ class banUserView(APIView):
             return Response({'message' : 'friend banned successfully'})
         except:
             return Response({'error' : 'invalid data'}, status=400)
-
