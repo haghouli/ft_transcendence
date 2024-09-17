@@ -29,11 +29,13 @@ main{
 }
 
 .game {
+
     height: 100vh;
     width: 100%;
     display: flex;
     align-items: center;
-    background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),url('../images/img1.jpg');
+    /* background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),url('../images/img1.jpg'); */
+    background-color: black;
     background-size: cover;
     background-position: center;
     padding: 2rem 0.6rem;
@@ -193,7 +195,6 @@ span{
 .user-div h1{
     font-size: 25px;
     font-weight: 300;
-    font-
 }
 
 #user-name{
@@ -353,20 +354,20 @@ span{
     padding: 0;
     margin: 0;
     overflow-x: auto;
-    max-height: 560px;
+    height: 560px;
 }
 
 /* Custom scrollbar styles */
-#scroll::-webkit-scrollbar {
+#scroll::-webkit-scrollbar, #scroll2::-webkit-scrollbar {
     width: 8px;
 }
 
-#scroll::-webkit-scrollbar-thumb {
+#scroll::-webkit-scrollbar-thumb, #scroll2::-webkit-scrollbar-thumb {
     background-color: #888;
     border-radius: 4px;
 }
 
-#scroll::-webkit-scrollbar-thumb:hover {
+#scroll::-webkit-scrollbar-thumb:hover, #scroll2::-webkit-scrollbar-thumb:hover {
     background-color: #555;
 }
 
@@ -603,8 +604,8 @@ span{
 }
 
 .sent .msg_cotainer_send {
-    max-width: 70%;
     background-color: #f1f1f1;
+    max-width: 70%;
     padding: 10px;
     border-radius: 10px;
     position: relative;
@@ -721,7 +722,7 @@ span{
     object-fit: cover;
 }
 
-.right i {
+.right i{
     color: var(--text-color);
     font-size: 22px;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5), 
@@ -731,7 +732,7 @@ span{
     margin-bottom: 2rem;
 }
 
-.right h1 {
+.right h1{
     color: var(--text-color);
     font-size: 22px;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5), 

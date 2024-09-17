@@ -4,8 +4,6 @@ from django.contrib.auth.models import AbstractUser
 from django.core.exceptions import ValidationError
 import os
 
-
-
 class CustomeFriendShip(models.Model):
 
     user = models.ForeignKey(
@@ -16,7 +14,6 @@ class CustomeFriendShip(models.Model):
     request_date = models.DateTimeField(auto_now=True)
     status = models.IntegerField()
     response_date = models.DateTimeField(blank=True, null=True)
-
 
 
 class CustomeChatRoom(models.Model):

@@ -204,3 +204,13 @@ SIMPLE_JWT = {
 
     "TOKEN_OBTAIN_SERIALIZER": "api.serializers.MyTokenObtainPairSerializer",
 }
+
+
+
+
+
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'hichamaghoulid17e33@gmail.com'
+EMAIL_HOST_PASSWORD = 'tsdv wotx dwgp lqvz'
+EMAIL_PORT = 587

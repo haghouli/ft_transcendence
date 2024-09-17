@@ -35,7 +35,8 @@ main{
     width: 100%;
     display: flex;
     align-items: center;
-    background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),url('../images/img1.jpg');
+    /* background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),url('../images/img1.jpg'); */
+    background-color: black;
     background-size: cover;
     background-position: center;
     padding: 2rem 0.6rem;

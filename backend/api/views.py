@@ -1,23 +1,36 @@
 from django.shortcuts import render, redirect
 from django.http.response import HttpResponse
 
+from rest_framework_simplejwt.authentication import JWTAuthentication
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework.permissions import IsAuthenticated
-from rest_framework_simplejwt.authentication import JWTAuthentication
-from rest_framework.permissions import AllowAny
 
 from . import serializers
 from . import models
 
-from django.db.models import Q
-import os
-import sys
-from django.utils import timezone
+from .utiles import createTokenForUser, getIntraUser, saveIntraUserImage, getCustomFriendship, getRandomCode, sendMessage
 from .customObjects import CustomeFriendShip, CustomeChatRoom
-from .utiles import createTokenForUser, getIntraUser, saveIntraUserImage, getCustomFriendship
+from django.utils import timezone
+from django.db.models import Q
 
 import json
+import sys
+import os
+
+
+def twoFA(user):
+    try:
+        code = getRandomCode()
+        user_code_model = models.Code.objects.get(user__id=user.id)
+        user_code_model.number = str(code)
+        user_code_model.save()
+        sendMessage(user.email, code)
+        return Response({'message': 'message sended'})
+    except Exception as e:
+        print(e, file=sys.stderr)
+        return Response({'error': 'error'}, status=400)
 
 # ---------------------------- views ----------------------------
 
@@ -70,13 +83,10 @@ import json
 #             'message': 'User created successfully'
 #         })
 
-
 def set_cookie(value, response):
     response.set_cookie('my_token', value['access'])
 
-
-
-def intraLogin(code):
+def intraLogin(code, request):
     res_json = getIntraUser(code)
     if res_json is None:
         return Response({'error': 'Invalid login'}, status=400)
@@ -89,9 +99,11 @@ def intraLogin(code):
 
     user = models.User.objects.filter(email=email).first()
     if user is not None:
+        if user.is_2af_active:
+            print("here", file=sys.stderr)
+            return twoFA(user)
         token = createTokenForUser(user)
-
-        response = redirect('http://127.0.0.1:3001/')
+        response = redirect('http://127.0.0.1:3000/')
         set_cookie(token, response)
         return response
 
@@ -108,12 +120,13 @@ def intraLogin(code):
 
     new_instance.save()
     user = models.User.objects.get(username=username)
-    token = createTokenForUser(user)
+    if user.is_2af_active:
+        return twoFA(user)
 
-    response = redirect('http://127.0.0.1:3001/')
+    token = createTokenForUser(user)
+    response = redirect('http://127.0.0.1:3000/')
     set_cookie(token, response)
     return response
-
 
 class intraCallBack(APIView):
 
@@ -122,29 +135,25 @@ class intraCallBack(APIView):
 
     def get(self, request):
         code = request.query_params.get('code')
-        response = intraLogin(code)
-
+        response = intraLogin(code, request)
         return response
 
-        
 
 class verify_user(APIView):
 
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
 
-    def post(self, request):
+    def get(self, request):
         user_id = request.user.id
         user = models.User.objects.get(pk=user_id)
-        print(user_id, file=sys.stderr)
         serialiser = serializers.UserSerializer(user)
-
         return Response(serialiser.data)
 
 
 class registerView(APIView):
 
-    authentication_classes = [] 
+    authentication_classes = []
     permission_classes = [AllowAny] 
 
     def post(self, request):
@@ -166,7 +175,6 @@ class getUsersView(APIView):
         return Response(serializer.data)
 
 
-# should be updated if i work with simple jwt
 class getMeView(APIView):
 
     authentication_classes = [JWTAuthentication]
@@ -214,21 +222,21 @@ class userView(APIView):
     def put(self, request, id):
 
         try:
-            user = models.User.objects.get(id=id)
+            user_id = request.user.id
+            user = models.User.objects.get(id=int(user_id))
             serializer = serializers.UserSerializer(user, request.data)
             if serializer.is_valid():
                 serializer.save()
-                print(serializer.data, file=sys.stderr)
                 return Response(serializer.data)
             return Response({'error' : 'invalid input data'}, status=400)
         except Exception as e:
-            print(e, file=sys.stderr)
             return Response({'error' : 'invalid user'}, status=400)
     
-    def delete(self, request, id):
+    def delete(self, request):
 
         try:
-            user = models.User.objects.get(id=id)
+            user_id = request.user.id
+            user = models.User.objects.get(id=user_id)
             user.delete()
             picture_path = user.avatar.path
             os.remove(picture_path)
@@ -241,11 +249,11 @@ class userView(APIView):
 
 class getFriendsView(APIView):
 
-    # authentication_classes = [JWTAuthentication]
-    # permission_classes = [IsAuthenticated]
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
 
-    authentication_classes = []
-    permission_classes = [AllowAny]
+    # authentication_classes = []
+    # permission_classes = [AllowAny]
 
     def get(self, request, id):
 
@@ -259,7 +267,6 @@ class getFriendsView(APIView):
         return Response(data)
 
 
-
 class getOnlineFriendsView(APIView):
 
     authentication_classes = [JWTAuthentication]
@@ -269,8 +276,8 @@ class getOnlineFriendsView(APIView):
 
         user = models.User.objects.get(id=id)
         friend_ships = models.FriendShip.objects.filter(
-            (Q(friend_ship_sender=user) & Q(friend_ship_sender__status=1) & Q(friend_ship_sender__is_online=1))
-            | (Q(friend_ship_reciever=user) & Q(friend_ship_sender__status=1) & Q(friend_ship_sender__is_online=1))
+            (Q(friend_ship_sender=user) & Q(status=1) & Q(friend_ship_reciever__is_online=True)) |
+            (Q(friend_ship_reciever=user) & Q(status=1) & Q(friend_ship_sender__is_online=True))
         )
 
         online_users = []
@@ -367,9 +374,12 @@ class getUserScore(APIView):
 
     def get(self, request, id):
 
-        scores = models.Score.objects.get(pk=id)
-        serializer = serializers.ScoreSerializer(scores)
-        return Response(serializer.data)
+        try:
+            scores = models.Score.objects.get(user__id=id)
+            serializer = serializers.ScoreSerializer(scores)
+            return Response(serializer.data)
+        except:
+            return Response({'error' : 'invalid request'}, status=400)
 
 class getChatRoomMessagesView(APIView):
 
@@ -388,12 +398,8 @@ class getChatRoomLast20MessagesView(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request, id):
-
-        chat_room_messages = models.Message.objects.filter(chat_room__id=id)
-
-        models.Message.objects.filter(chat_room__id=id).order_by('send_date')[:20]
-
-        serializer = serializers.MessageSerializer(chat_room_messages, many=True)
+        last_20_messages = models.Message.objects.filter(chat_room__id=id).order_by('-send_date')[:20:-1]
+        serializer = serializers.MessageSerializer(last_20_messages, many=True)
         return Response(serializer.data)
     
 class getUserChatRooms(APIView):
@@ -404,17 +410,10 @@ class getUserChatRooms(APIView):
     def get(self, request, id):
 
         user_rooms = models.chatRoom.objects.filter(Q(user1__id=id) | Q(user2__id=id))
-        # serializer = serializers.ChatRoomSerializer(user_rooms, many=True)
-
         custom_user_rooms = []
-
         for item in user_rooms:
             tmp_user = item.user1 if item.user1.id != id else item.user2
-
-            custom_chat_room = CustomeChatRoom(
-                id=item.id,
-                user=tmp_user,
-            )
+            custom_chat_room = CustomeChatRoom(id=item.id, user=tmp_user)
             custom_user_rooms.append(custom_chat_room)
 
         serializer = serializers.CustomeChatRoomSerializer(custom_user_rooms, many=True)
@@ -433,11 +432,8 @@ class createChatRoom(APIView):
             user1 = request.user
             user2_id = request.data.get('user2')
             user2 = models.User.objects.get(pk=user2_id)
+            models.chatRoom.objects.create(user1=user1, user2=user2)
 
-            models.chatRoom.objects.create(
-                user1=user1,
-                user2=user2
-            )
             return Response({'message': 'chat room created successfully'})
         except Exception as e:
             print(e, file=sys.stderr)
@@ -470,7 +466,6 @@ class sendFriendView(APIView):
         try:
             sender_id = request.user.id
             reciever_id = int(request.data.get('reciever_id'))
-            # print(receiver_id, file=sys.stderr)
 
             sender = models.User.objects.get(pk=sender_id)
             reciever = models.User.objects.get(pk=reciever_id)
@@ -528,3 +523,45 @@ class banUserView(APIView):
             return Response({'message' : 'friend banned successfully'})
         except:
             return Response({'error' : 'invalid data'}, status=400)
+
+
+class user2FA(APIView):
+
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        try:
+            user_id = request.user.id
+            code = getRandomCode()
+            user_code_model = models.Code.objects.get(user__id=user_id)
+            user_code_model.number = str(code)
+            user_code_model.save()
+            sendMessage(request, code)
+            return Response({'message': 'message sended'})
+        except Exception as e:
+            return Response({'error': 'error'}, status=400)
+
+class confirmeCode(APIView):
+
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+
+        try:
+            user_id = request.user.id
+            code = request.data.get('code')
+            user_code_model = models.Code.objects.get(user__id=user_id)
+
+            if code == user_code_model.number:
+                user_code_model.number = None
+                user_code_model.save()
+                token = createTokenForUser(request.user)
+                response = redirect('http://127.0.0.1:3001/')
+                set_cookie(token, response)
+                return response
+            return Response({'error': 'invalid code'}, status=400)
+        except:
+            return Response({'error': 'invalid code'}, status=400)
+

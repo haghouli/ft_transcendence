@@ -1,9 +1,33 @@
 from rest_framework_simplejwt.tokens import RefreshToken
-import requests
 from django.conf import settings
-import os
-from . import serializers
+import requests
+
 from .customObjects import CustomeFriendShip
+from django.core.mail import EmailMessage
+from . import serializers
+
+import random
+import math
+import sys
+import os
+
+def getRandomCode():
+
+    digits = [i for i in range(0, 10)]
+    random_str = ""
+
+    for i in range(6):
+        index = math.floor(random.random() * 10)
+        random_str += str(digits[index])
+
+    return random_str
+
+def sendMessage(user_email, code):
+    email = user_email
+    mail_subject = 'Confirmation code has been sent to your email.'
+    message = 'the code is ' + code
+    email = EmailMessage(mail_subject, message, to=[email])
+    email.send()
 
 def createTokenForUser(user):
     refresh = RefreshToken.for_user(user)

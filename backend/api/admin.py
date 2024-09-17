@@ -11,4 +11,4 @@ admin.site.register(models.chatRoom)
 admin.site.register(models.singleMatch)
 admin.site.register(models.matchTournament)
 admin.site.register(models.tournamentScore)
-
+admin.site.register(models.Code)

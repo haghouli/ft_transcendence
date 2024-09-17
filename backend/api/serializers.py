@@ -18,7 +18,7 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.User
-        fields = ['id', 'first_name', 'last_name', 'username', 'password', 'status', 'avatar', 'create_at', 'is_online']
+        fields = ['id', 'first_name', 'last_name', 'username', 'password', 'status', 'avatar', 'create_at', 'is_online', 'email']
         extra_kwargs = {
             'password': {'write_only': True}
         }
@@ -48,9 +48,13 @@ class UserSerializer(serializers.ModelSerializer):
         return instance
 
 class MessageSerializer(serializers.ModelSerializer):
+
+    message_user = UserSerializer()
+
     class Meta:
         model = models.Message
-        fields = ['message_sender', 'message_reciever', 'message_content', 'send_date', 'read_date', 'chat_room']
+        # fields = ['message_sender', 'message_reciever', 'message_content', 'send_date', 'read_date', 'chat_room']
+        fields = ['message_user', 'message_content', 'send_date', 'read_date', 'chat_room']
 
 class FriendShipSerializer(serializers.ModelSerializer):
 

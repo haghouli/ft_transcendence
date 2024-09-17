@@ -9,11 +9,10 @@ urlpatterns = [
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('token/verify/', views.verify_user.as_view(), name='token_verify'),
 
-    path("users/", views.getUsersView.as_view(), name="users"),
-
     path("register/", views.registerView.as_view(), name="register"),
     # path("intra_login/", views.intraLoginView.as_view(), name="intra_login"),
 
+    path("users/", views.getUsersView.as_view(), name="users"),
     path('users/add_user/', views.addUserView.as_view(), name="add_user"),
     path('users/user/<int:id>', views.userView.as_view(), name='user'),
     path('users/user/friends/<int:id>', views.getFriendsView.as_view(), name="get_friends"),
@@ -23,7 +22,6 @@ urlpatterns = [
     path('users/user/chat_rooms/<int:id>', views.getUserChatRooms.as_view(), name='get_user_chat_rooms'),
     path('users/user/me/', views.getMeView.as_view(), name="get_me"),
     path('users/user/me/panding_friend_requests/', views.getPandingFriendRequestsView.as_view(), name='get_panding_friend_requests'),
-
 
     path('users/user/send_friend_request/', views.sendFriendView.as_view(), name='send_fiend_request'),
     path('users/user/accept_friend_request/<int:id>', views.acceptFriendRequestView.as_view(), name='accept_fiend_request'),
@@ -43,4 +41,6 @@ urlpatterns = [
 
     path('intra_callback/',  views.intraCallBack.as_view(), name='intra_login'),
 
+    path('send_mail/', views.user2FA.as_view(), name="send_mail"),
+    path('validate_code/', views.confirmeCode.as_view(), name="verify_code"),
 ]

@@ -23,13 +23,23 @@ services:
       - DB_PORT=${DB_PORT}
 
   frontend:
-    image: nginx
+    build: ./frontend/
     container_name: frontend
     restart: always
     ports:
       - 3001:80
     volumes:
       - frontend:/usr/share/nginx/html
+  
+
+  reactfront:
+    build: ./reactfront/
+    container_name: reactfront
+    restart: always
+    ports:
+      - 3000:3000
+    volumes:
+      - reactfront:/r-tuto/
 
 
   # db:
@@ -57,7 +67,7 @@ services:
     restart: always
     container_name: redis
     ports:
-      - 6379:6379
+      - 6370:6379
   
 
 volumes:
@@ -68,8 +78,8 @@ volumes:
       type: none
       o: bind
       # device: /home/haghouli/Desktop/ft_transcendence/backend/
-      # device: /nfs1/homes/haghouli/Desktop/ft_transcendence/backend/
-      device: C:\Users\HiChaM\Desktop\Files\ft_transcendence\backend\
+      device: /nfs/homes/haghouli/Desktop/ft_transcendence/backend/
+      # device: C:\Users\HiChaM\Desktop\Files\ft_transcendence\backend\
   
 
   frontend:
@@ -79,5 +89,15 @@ volumes:
       type: none
       o: bind
       # device: /home/haghouli/Desktop/ft_transcendence/frontend/
-      # device: /nfs1/homes/haghouli/Desktop/ft_transcendence/frontend/
-      device: C:\Users\HiChaM\Desktop\Files\ft_transcendence\frontend\
+      device: /nfs/homes/haghouli/Desktop/ft_transcendence/frontend/
+      # device: C:\Users\HiChaM\Desktop\Files\ft_transcendence\frontend\
+    
+  reactfront:
+    driver: local
+    name: react-front
+    driver_opts:
+      type: none
+      o: bind
+      # device: /home/haghouli/Desktop/ft_transcendence/frontend/
+      device: /nfs/homes/haghouli/Desktop/ft_transcendence/reactfront/
+      # device: C:\Users\HiChaM\Desktop\Files\ft_transcendence\frontend\

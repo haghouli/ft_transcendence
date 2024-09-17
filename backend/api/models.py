@@ -6,29 +6,44 @@ import os
 def uploads(instace, file_name):
     return os.path.join('uploads', file_name);
 
+
 class User(AbstractUser):
     first_name = models.CharField(max_length=100, blank=True)
     last_name = models.CharField(max_length=100, blank=True)
     username = models.CharField(max_length=100, unique=True)
     password = models.CharField(max_length=200, blank=True)
     status = models.BooleanField(default=True)
-    avatar = models.ImageField(upload_to=uploads, default='/media/uploads/user-default.png')
+    avatar = models.ImageField(upload_to=uploads, default='/uploads/user-default.png')
     create_at = models.DateTimeField(auto_now=True)
     is_online = models.BooleanField(default=False)
+    is_2af_active = models.BooleanField(default=False)
 
     def __str__(self) -> str:
         return self.username
+
+    def delete(self, *args, **kwargs):
+        if self.avatar and self.avatar.name != '/uploads/user-default.png':
+            if os.path.isfile(self.avatar.path):
+                os.remove(self.avatar.path)
+        super().delete(*args, **kwargs)
+
+class Code(models.Model):
+    number = models.CharField(max_length=6, blank=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    def __str__(self) -> str:
+        return "".join([self.user.username, "_", self.number])
 
 class FriendShip(models.Model):
     friend_ship_sender = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
-        related_name='friend_ship_sender'
+        related_name='friend_ship_sender',
     )
     friend_ship_reciever = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
-        related_name='friend_ship_reciever'
+        related_name='friend_ship_reciever',
     )
     request_date = models.DateTimeField(auto_now=True)
     status = models.IntegerField()
@@ -65,17 +80,16 @@ class FriendShip(models.Model):
 #         return 'usermatch_' + str(self.id)
 
 # for fix the proble of getting user opponent
-
 class singleMatch(models.Model):
     player1 = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
-        related_name="match_player1"
+        related_name="match_player1",
     )
     player2 = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
-        related_name="match_player2"
+        related_name="match_player2",
     )
 
     player1_score = models.IntegerField(blank=True, default=0)
@@ -205,16 +219,12 @@ class chatRoom(models.Model):
         return 'chatroom_' + str(self.id)
 
 class Message(models.Model):
-    message_sender = models.ForeignKey(
+    message_user = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
-        related_name='message_sender'
+        related_name='message_sender',
     )
-    message_reciever = models.ForeignKey(
-        User,
-        on_delete=models.CASCADE,
-        related_name='message_reciever'
-    )
+
     message_content = models.TextField()
     send_date = models.DateTimeField(auto_now=True)
     read_date = models.DateTimeField()
