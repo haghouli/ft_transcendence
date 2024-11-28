@@ -1,0 +1,242 @@
+{
+    "welcome": "Welcome",
+    "search": "Search...",
+    "notification": "Notifications",
+
+    "login": {
+        "login": "LOGIN",
+        "username": "USERNAME",
+        "password": "PASSWORD",
+        "submit": "SUBMIT",
+        "or": "or",
+        "intraLogin": "LOGIN WITH INTRA",
+        "dontHaveAccout": "Don't you have an account?",
+        "singnUp": "Sign UP"
+    },
+
+    "register": {
+        "signUp": "SIGN UP",
+        "firstName": "FIRST NAME",
+        "lastName": "LAST NAME",
+        "emailAddress": "EMAIL ADDRESS",
+        "register": "REGISTER",
+        "intraRegister": "Register with intra",
+        "alreadyHaveAccount": "Already have an account?",
+        "login": "Login"
+
+    },
+
+    "home" : {
+        "welcome1": "Welcome to Our Game",
+        "welcome2": "Enjoy your time with friends!",
+        "welcome3": "Feel free to try anything you like.",
+        "playNow": "Play Now",
+        "topPlayers": "Top Players",
+        "gameModes": "Game Modes",
+        "playAi": "PLay with Ai Mode",
+        "playeTour": "PLay Tourament Mode",
+        "PlayGame": "Play Game Mode",
+
+        "local": "Local",
+        "Ai": "AI",
+        "tournement": "Tournement",
+
+        "areYouReady": "Are you ready to conquer the game?",
+        "startPlay": "Start Play"
+    },
+
+    "profile": {
+        "level": "level",
+        "wins": "Wins",
+        "gamesPlayed": "Games Played",
+        "losses": "Losses",
+        "winRate": "Win Rate",
+        "gamesHistory": "Battle Records",
+        "gamePlayStatistics": "Gameplay statistics",
+        "win": "Win",
+        "lose": "Lose",
+        "draw": "Draw",
+        "unban": "Unban",
+        "cancleRequest": "Cancle request",
+        "remove": "Remove",
+        "acceptRequest": "accept request",
+        "rejectRequest": "reject request",
+        "addFriend": "Add Friend"
+    },
+
+    "chat": {
+        "emptyMessages": "No message available",
+        "tapeYourMessaege": "Type your message...",
+
+        "online": "Online",
+        "offline": "Offline",
+
+        "viewProfile": "View profile",
+        "block": "Block",
+        "deblock": "Deblock",
+        "sendPlayReq": "Send play request",
+
+        "acceptChallenge": "Accept the challenge?",
+        "accept": "Accept",
+        "decline": "Decline"
+    },
+
+    "settings": {
+        "profile": "Profile",
+        "security": "Security",
+
+        "firstName": "First Name",
+        "lastName": "Last Name",
+        "username": "Username",
+        "saveChanges": "Save Changes",
+
+        "oldPwd": "Old Password",
+        "newPwd": "New Password",
+        "updatePwd": "Update Password",
+        "enable2fa": "Enable 2FA",
+        "disable2fa": "Disable la 2FA",
+
+        "profileAccount": "Profile Account",
+
+        "gameSettings": "Game Settings",
+        "defaultGame": "Default game",
+        "defaultLanguages": "Default Languages",
+        "defaultBoardColor": "Default Board Color",
+        "updateSettings": "Update Settings"
+    },
+
+    "tictactoe" : {
+        "gameMode": "choose the game mode",
+        "playFriend": "Play with Friend",
+        "playVsAi": "Play vs AI",
+        "findOpp" : "Find Opponent",
+        "player1": "Player 1",
+        "player2": "Player 2",
+        "easy": "Easy",
+        "hard": "Hard",
+        "you": "You",
+        "bot": "Bot",
+        "looking": "Looking...",
+        "youWin": "You Win",
+        "youLose": "You Lose",
+        "draw": "Draw",
+        "gameOverDraw": "Game over draw.",
+        "gameOverPlayWinStart": "Game over the player ",
+        "gameOverPlayWinEnd": " Win the game",
+        "playAgain": "Play Again",
+        "back": "Back",
+        "oppDisconnect": "Your opponent disconnected, match cancled"
+    },
+
+    "alerts": {
+        "loginSuccess": "Login success",
+        "friendShipAccept": "Friend request accepted successfully",
+        "friendShipAcceptError": "Error happed while accepting request",
+        "friendShipReject": "Lriend request rejected successfully",
+        "friendShipRejectError": "Error happed while rejecting request",
+        "sendRequestSucess": "Friend request sended successfully",
+        "sendRequestError": "Error happed while sending request",
+
+        "wrongUsernameOrPass" : "Wrong username or password",
+        "loginError": "Login error",
+        "efaDisable": "2FA disabled successfully.",
+        "efaDisableError": "Error happend while disabling the 2FA",
+        "efaEnableSucces" : "2FA enabled successfully.",
+        "efaEnableError": "Error happend while enabling the 2FA",
+
+        "updateSuccess": "updated successfuly.",
+        "updateError": "Error happend while updating your profile",
+
+        "emptyFields": "Fields are empty",
+        "noChanges": "No change detected in the password",
+        "changePassError": "Error happed while changing passowrd",
+        "changePassSuccess": "password changed successfully",
+        "messageSended": "message sended",
+        "welcome": "welcome",
+        "invalidCode": "invalid code",
+
+        "errorOccures": "an error occures",
+        "error": "error",
+
+        "chatRoomCreateSuccess" : "chat room create successfully",
+        "chatRoomCreateError": "error happend while creating the chat room",
+
+        "acceptFriendShipError": "Error happend while accepting friend request",
+        "refuseFriendShipError": "Error happend while accepting request",
+
+        "gameSettingsUpdate": "Game settings updated succesfuly.",
+
+        "invalidSelectedGame": "this game mode is not valdi for the selected game",
+    
+        "chatExist": "chat room already exist"
+    },
+
+    "twofapage": {
+        "header": "Enter your OTP Code Here:",
+        "verify": "Verify",
+        "cancle": "Cancel",
+        "notreciev": "Not received your code?",
+        "resend": "Resend"
+    },
+
+    "pongGame": {
+        "1vs1": "1 V 1 Match",
+        "custumizeGame": "Cunstomize Your Game",
+        "chooseTable": "Choose A table Them",
+        "classic":"Classic",
+        "standard": "Standard",
+        "football": "Football",
+        "customizePlayer": "Customize your player",
+        "player1": "Player 1",
+        "choosePaddle": "Choose paddle",
+        "ready": "Ready",
+        "player2": "Player 2",
+        "startGame": "Start Game",
+
+        "chooseGameMode": "Choose Your Game Mode",
+        "localMatch":"Local Match",
+        "connectAndComplete":"Connect and compete with players worldwide.",
+        "startPlay":"Start Play",
+        "onlineMatch":"Online Match",
+        "playLocally":"Play locally with a friend",
+        "createTour":"Create Tournement",
+        "CompleteIn":"Compete in a series of matches to determine the champion!",
+        "3Players":"3-Player Match",
+        "challengeFriend":"Challenge friends in a three-way match",
+
+        "moveRight": "move Right",
+        "moveLeft": "move Left",
+        "moveUp": "move up",
+        "moveDown": "move down",
+        "win": "WIN",
+        "playAgain": "Play Again",
+        "mainMenu": "Main Menu",
+        "playTicTacToe": "Play TicTacTeo!",
+
+        "joinTheTour": "Join the Tournament",
+        "enterName":"Enter your name",
+        "join": "Join",
+        "playeresJoin": "Players joined:",
+
+        "looking": "Looking...",
+        "vs": "VS",
+
+
+        "giveUp": "This is a confirm GavingUp",
+        "youWillLose":"You will lose points.",
+        "confirm": "Confirm",
+        "cancel": "Cancel",
+        "exit": "Exit",
+
+        "wainting": "Waiting...",
+        "pongGameTour": "pong game tournament",
+        "champion": "champion",
+        "start": "Start",
+        "home": "Home",
+        "nextMatch": "Next Match", 
+        
+        "youWon":"You won",
+        "youLose":"You lose",
+        "oppLeft": "opponent Left"
+    }
+}

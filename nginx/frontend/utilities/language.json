@@ -1,0 +1,246 @@
+{
+    "en": {
+        "welcome": "Welcome",
+        "search": "Search...",
+        "notification": "Notifications",
+
+        "login": {
+            "login": "LOGIN",
+            "username": "USERNAME",
+            "password": "PASSWORD",
+            "submit": "SUBMIT",
+            "or": "or",
+            "intraLogin": "LOGIN WITH INTRA",
+            "dontHaveAccout": "Don't you have an account?",
+            "singnUp": "Sign UP"
+        },
+
+        "register": {
+            "signUp": "SIGN UP",
+            "firstName": "FIRST NAME",
+            "lastName": "LAST NAME",
+            "emailAddress": "EMAIL ADDRESS",
+            "register": "REGISTER",
+            "intraRegister": "Register with intra",
+            "alreadyHaveAccount": "Already have an account?",
+            "login": "Login"
+
+        },
+
+        "home" : {
+            "welcome1": "Welcome to Our Game",
+            "welcome2": "Enjoy your time with friends!",
+            "welcome3": "Feel free to try anything you like.",
+            "playNow": "Play Now",
+            "topPlayers": "Top Players",
+            "gameModes": "Game Modes",
+            "playAi": "PLay with Ai Mode",
+            "playeTour": "PLay Tourament Mode",
+            "PlayGame": "Play Game Mode"
+        },
+
+        "profile": {
+            "level": "level",
+            "wins": "Wins",
+            "gamesPlayed": "Games Played",
+            "losses": "Losses",
+            "winRate": "Win Rate",
+            "gamesHistory": "PingPong Battle Records",
+            "gamePlayStatistics": "Gameplay statistics",
+            "win": "Win",
+            "lose": "Lose",
+            "draw": "Draw"
+        },
+
+        "chat": {
+            "emptyMessages": "No message available",
+            "tapeYourMessaege": "Type your message..."
+        },
+
+        "settings": {
+            "profile": "Profile",
+            "security": "Security",
+
+            "firstName": "First Name",
+            "lastName": "Last Name",
+            "username": "Username",
+            "saveChanges": "Save Changes",
+
+            "oldPwd": "Old Password",
+            "newPwd": "New Password",
+            "updatePwd": "Update Password",
+            "enable2fa": "Enable 2FA",
+            "disable2fa": "Disable la 2FA",
+
+            "profileAccount": "Profile Account",
+
+            "gameSettings": "Game Settings",
+            "defaultGame": "Default game",
+            "defaultLanguages": "Default Languages",
+            "defaultBoardColor": "Default Board Color",
+            "updateSettings": "Update Settings"
+        }
+    },
+
+    "fr": {
+        "welcome": "Bievenu",
+        "search": "Recherche...",
+        "notification": "Notifications",
+        "home" : {
+            "welcome1": "Bienvenue dans notre jeu",
+            "welcome2": "Profitez de votre temps entre amis !",
+            "welcome3": "N'hésitez pas à essayer tout ce que vous voulez.",
+            "playNow": "Jouer maintenant",
+            "topPlayers": "Meilleurs joueurs",
+            "gameModes": "Modes de jeu",
+            "playAi": "Jouez avec le mode IA",
+            "playeTour": "Jouez en mode Tourament",
+            "PlayGame": "Jouer en mode jeu"
+        },
+
+        "login": {
+            "login": "CONNEXION",
+            "username": "NOM D'UTILISATEUR",
+            "password": "MOT DE PASSE",
+            "submit": "SOUMETTRE",
+            "or": "ou",
+            "intraLogin": "CONNEXION AVEC INTRA",
+            "dontHaveAccout": "Vous n'avez pas de compte ?",
+            "singnUp": "S'inscrire"
+        },
+
+        "register": {
+            "signUp": "S'INSCRIRE",
+            "firstName": "PRÉNOM",
+            "lastName": "NOM DE FAMILLE",
+            "emailAddress": "ADRESSE E-MAIL",
+            "register": "S'INSCRIRE",
+            "intraRegister": "S'inscrire avec intra",
+            "alreadyHaveAccount": "Vous avez déjà un compte ?",
+            "login": "Connexion"
+        },
+
+        "profile": {
+            "level": "niveau",
+            "wins": "Victoires",
+            "gamesPlayed": "Jeux Joués",
+            "losses": "Défaites",
+            "winRate": "Taux de Victoire",
+            "gamesHistory": "Historique des Parties de PingPong",
+            "gamePlayStatistics": "Statistiques de jeu",
+            "win": "profit",
+            "lose": "perte",
+            "draw": "Burt"
+        },
+
+        "chat": {
+            "emptyMessages": "Aucun message disponible",
+            "tapeYourMessaege": "Tapez votre message..."
+        },
+
+        "settings": {
+            "profile": "Profil",
+            "security": "Sécurité",
+
+            "firstName": "Prénom",
+            "lastName": "Nom de famille",
+            "username": "Nom d'utilisateur",
+            "saveChanges": "Sauvegarder les Modifications",
+
+            "oldPwd": "Ancien Mot de Passe",
+            "newPwd": "Nouveau Mot de Passe",
+            "updatePwd": "Mettre à Jour le Mot de Passe",
+            "enable2fa": "Activer la 2FA",
+            "disable2fa": "Désactiver l'authentification à deux facteurs",
+
+            "profileAccount": "Compte de profil",
+
+            "gameSettings": "Paramètres du Jeu",
+            "defaultGame": "Jeu par Défaut",
+            "defaultLanguages": "Langues par Défaut",
+            "defaultBoardColor": "Couleur de Plateau par Défaut",
+            "updateSettings": "Mettre à Jour les Paramètres"
+        }
+    }
+    ,
+    "ar": {
+        "welcome": "مرحبا",
+        "search": "...بحث",
+        "notification": "إشعارات",
+        "home" : {
+            "welcome1": "مرحبا بكم في لعبتنا",
+            "welcome2": "استمتع بوقتك مع الأصدقاء!",
+            "welcome3": "لا تتردد في تجربة أي شيء تريد.",
+            "playNow": "العب الآن",
+            "topPlayers": "أفضل اللاعبين",
+            "gameModes": "أوضاع اللعب",
+            "playAi": "Jouez avec le mode IA",
+            "playeTour": "Jouez en mode Tourament",
+            "PlayGame": "Jouer en mode jeu"
+        },
+
+        "login": {
+            "login": "تسجيل الدخول",
+            "username": "اسم المستخدم",
+            "password": "كلمة المرور",
+            "submit": "إرسال",
+            "or": "أو",
+            "intraLogin": "تسجيل الدخول باستخدام إنترى",
+            "dontHaveAccout": "هل ليس لديك حساب؟",
+            "singnUp": "سجل"
+        },
+
+        "register": {
+            "signUp": "سجل",
+            "firstName": "الاسم الأول",
+            "lastName": "اسم العائلة",
+            "emailAddress": "عنوان البريد الإلكتروني",
+            "register": "تسجيل",
+            "intraRegister": "التسجيل باستخدام إنترى",
+            "alreadyHaveAccount": "هل لديك حساب بالفعل؟",
+            "login": "تسجيل الدخول"
+        },
+    
+        "profile": {
+            "level": "المستوى",
+            "wins": "الانتصارات",
+            "gamesPlayed": "الألعاب الملعوبة",
+            "losses": "الخسائر",
+            "winRate": "نسبة الفوز",
+            "gamesHistory": "سجل معارك بينغ بونغ",
+            "gamePlayStatistics": "إحصائيات اللعب",
+            "win": "ربح",
+            "lose": "خسارة",
+            "draw": "تعادل"
+        },
+
+        "chat": {
+            "emptyMessages": "لا توجد رسائل متاحة",
+            "tapeYourMessaege": "اكتب رسالتك..."
+        },
+
+        "settings": {
+            "profile": "الملف الشخصي",
+            "security": "الأمان",
+
+            "firstName": "الاسم الأول",
+            "lastName": "اسم العائلة",
+            "username": "اسم المستخدم",
+            "saveChanges": "حفظ التغييرات",
+
+            "oldPwd": "كلمة المرور القديمة",
+            "newPwd": "كلمة المرور الجديدة",
+            "updatePwd": "تحديث كلمة المرور",
+            "enable2fa": "تفعيل المصادقة الثنائية",
+            "disable2fa": "تعطيل المصادقة الثنائية",
+
+            "profileAccount": "حساب الملف الشخصي",
+
+            "gameSettings": "إعدادات اللعبة",
+            "defaultGame": "اللعبة الافتراضية",
+            "defaultLanguages": "اللغات الافتراضية",
+            "defaultBoardColor": "لون اللوحة الافتراضي",
+            "updateSettings": "تحديث الإعدادات"
+        }
+    }
+}

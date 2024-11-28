@@ -1,0 +1,241 @@
+{
+    "welcome": "Bievenu",
+    "search": "Recherche...",
+    "notification": "Notifications",
+    "home" : {
+        "welcome1": "Bienvenue dans notre jeu",
+        "welcome2": "Profitez de votre temps entre amis !",
+        "welcome3": "N'hésitez pas à essayer tout ce que vous voulez.",
+        "playNow": "Jouer maintenant",
+        "topPlayers": "Meilleurs joueurs",
+        "gameModes": "Modes de jeu",
+        "playAi": "Jouez avec le mode IA",
+        "playeTour": "Jouez en mode Tourament",
+        "PlayGame": "Jouer en mode jeu",
+
+        "local": "Local",
+        "Ai": "IA",
+        "tournement": "Tournoi",
+
+        "areYouReady": "Êtes-vous prêt à conquérir le jeu ?",
+        "startPlay": "Commencer à jouer"
+    },
+
+    "login": {
+        "login": "CONNEXION",
+        "username": "NOM D'UTILISATEUR",
+        "password": "MOT DE PASSE",
+        "submit": "SOUMETTRE",
+        "or": "ou",
+        "intraLogin": "CONNEXION AVEC INTRA",
+        "dontHaveAccout": "Vous n'avez pas de compte ?",
+        "singnUp": "S'inscrire"
+    },
+
+    "register": {
+        "signUp": "S'INSCRIRE",
+        "firstName": "PRÉNOM",
+        "lastName": "NOM DE FAMILLE",
+        "emailAddress": "ADRESSE E-MAIL",
+        "register": "S'INSCRIRE",
+        "intraRegister": "S'inscrire avec intra",
+        "alreadyHaveAccount": "Vous avez déjà un compte ?",
+        "login": "Connexion"
+    },
+
+    "profile": {
+        "level": "niveau",
+        "wins": "Victoires",
+        "gamesPlayed": "Jeux Joués",
+        "losses": "Défaites",
+        "winRate": "Taux de Victoire",
+        "gamesHistory": "Historique des Parties",
+        "gamePlayStatistics": "Statistiques de jeu",
+        "win": "profit",
+        "lose": "perte",
+        "draw": "Burt",
+
+        "unban": "Débloquer",
+        "cancleRequest": "Annuler la demande",
+        "remove": "Retirer",
+        "acceptRequest": "Accepter la demande",
+        "rejectRequest": "Rejeter la demande",
+        "addFriend": "Ajouter un ami"
+    },
+
+    "chat": {
+        "emptyMessages": "Aucun message disponible",
+        "tapeYourMessaege": "Tapez votre message...",
+
+        "online": "En ligne",
+        "offline": "Hors ligne",
+
+        "viewProfile": "Voir le profil",
+        "block": "Bloquer",
+        "deblock": "Débloquer",
+        "sendPlayReq": "Envoyer une demande de jeu",
+
+        "acceptChallenge": "Accepter le défi ?",
+        "accept": "Accepter",
+        "decline": "Décliner"
+    },
+
+    "settings": {
+        "profile": "Profil",
+        "security": "Sécurité",
+
+        "firstName": "Prénom",
+        "lastName": "Nom de famille",
+        "username": "Nom d'utilisateur",
+        "saveChanges": "Sauvegarder les Modifications",
+
+        "oldPwd": "Ancien Mot de Passe",
+        "newPwd": "Nouveau Mot de Passe",
+        "updatePwd": "Mettre à Jour le Mot de Passe",
+        "enable2fa": "Activer la 2FA",
+        "disable2fa": "Désactiver l'authentification à deux facteurs",
+
+        "profileAccount": "Compte de profil",
+
+        "gameSettings": "Paramètres du Jeu",
+        "defaultGame": "Jeu par Défaut",
+        "defaultLanguages": "Langues par Défaut",
+        "defaultBoardColor": "Couleur de Plateau par Défaut",
+        "updateSettings": "Mettre à Jour les Paramètres"
+    },
+
+    "tictactoe": {
+        "gameMode": "Choisissez le mode de jeu",
+        "playFriend": "Jouer avec un ami",
+        "playVsAi": "Jouer contre l'IA",
+        "findOpp": "Trouver un adversaire",
+        "player1": "Joueur 1",
+        "player2": "Joueur 2",
+        "easy": "Facile",
+        "hard": "Difficile",
+        "you": "Vous",
+        "bot": "Bot",
+        "looking": "Recherche...",
+        "youWin": "Vous gagnez",
+        "youLose": "Vous perdez",
+        "draw": "Match nul",
+        "gameOverDraw": "Fin de la partie, match nul.",
+        "gameOverPlayWinStart": "Fin de la partie, le joueur",
+        "gameOverPlayWinEnd": "a gagné le jeu",
+        "playAgain": "Rejouer",
+        "back": "Retour",
+        "oppDisconnect": "Votre adversaire s'est déconnecté, match annulé"
+    },
+
+    "alerts": {
+        "loginSuccess": "Connexion réussie",
+        "friendShipAccept": "Demande d'ami acceptée avec succès",
+        "friendShipAcceptError": "Une erreur est survenue lors de l'acceptation de la demande",
+        "friendShipReject": "Demande d'ami rejetée avec succès",
+        "friendShipRejectError": "Une erreur est survenue lors du rejet de la demande",
+        "sendRequestSucess": "Demande d'ami envoyée avec succès",
+        "sendRequestError": "Une erreur est survenue lors de l'envoi de la demande",
+
+        "wrongUsernameOrPass": "Nom d'utilisateur ou mot de passe incorrect",
+        "loginError": "Erreur de connexion",
+        "efaDisable": "2FA désactivée avec succès",
+        "efaDisableError": "Une erreur est survenue lors de la désactivation de la 2FA",
+        "efaEnableSucces": "2FA activée avec succès",
+        "efaEnableError": "Une erreur est survenue lors de l'activation de la 2FA",
+
+        "updateSuccess": "Mise à jour réussie",
+        "updateError": "Une erreur est survenue lors de la mise à jour de votre profil",
+
+        "emptyFields": "Les champs sont vides",
+        "noChanges": "Aucun changement détecté dans le mot de passe",
+        "changePassError": "Une erreur est survenue lors du changement de mot de passe",
+        "changePassSuccess": "Mot de passe changé avec succès",
+        "messageSended": "Message envoyé",
+        "welcome": "Bienvenue",
+        "invalidCode": "Code invalide",
+
+        "errorOccures": "Une erreur est survenue",
+        "error": "Erreur",
+
+        "chatRoomCreateSuccess": "Salle de chat créée avec succès",
+        "chatRoomCreateError": "Une erreur est survenue lors de la création de la salle de chat",
+
+        "acceptFriendShipError": "Une erreur est survenue lors de l'acceptation de la demande d'ami",
+        "refuseFriendShipError": "Une erreur est survenue lors du refus de la demande d'ami",
+
+        "gameSettingsUpdate": "Paramètres du jeu mis à jour avec succès.",
+
+        "invalidSelectedGame": "Ce mode de jeu n'est pas valide pour le jeu sélectionné.",
+
+        "chatExist": "La salle de chat existe déjà"
+    },
+
+    "twofapage": {
+      "header": "Entrez votre code OTP ici :",
+      "verify": "Vérifier",
+      "cancle": "Annuler",
+      "notreciev": "Vous n'avez pas reçu votre code ?",
+      "resend": "Renvoyer"
+    },
+
+    "pongGame": {
+
+        "1vs1": "Match 1 contre 1",
+        "custumizeGame": "Personnalisez votre jeu",
+        "chooseTable": "Choisissez une table",
+        "classic": "Classique",
+        "standard": "Standard",
+        "football": "Football",
+        "customizePlayer": "Personnalisez votre joueur",
+        "player1": "Joueur 1",
+        "choosePaddle": "Choisissez la palette",
+        "ready": "Prêt",
+        "player2": "Joueur 2",
+        "startGame": "Démarrer le jeu",
+
+        "chooseGameMode": "Choisissez votre mode de jeu",
+        "localMatch": "Match local",
+        "connectAndComplete": "Connectez-vous et affrontez des joueurs du monde entier.",
+        "startPlay": "Commencer à jouer",
+        "onlineMatch": "Match en ligne",
+        "playLocally": "Jouez localement avec un ami",
+        "createTour": "Créer un tournoi",
+        "CompleteIn": "Affrontez-vous dans une série de matchs pour déterminer le champion !",
+        "3Players": "Match à 3 joueurs",
+        "challengeFriend": "Défiez des amis dans un match à trois",
+
+        "moveRight": "Se déplacer à droite",
+        "moveLeft": "Se déplacer à gauche",
+        "moveUp": "Se déplacer vers le haut",
+        "moveDown": "Se déplacer vers le bas",
+        "win": "GAGNER",
+        "playAgain": "Rejouer",
+        "mainMenu": "Menu principal",
+        "playTicTacToe": "Jouer au Tic-Tac-Toe !",
+
+        "joinTheTour": "Rejoindre le tournoi",
+        "enterName": "Entrez votre nom",
+        "join": "Rejoindre",
+        "playeresJoin": "Joueurs inscrits :",
+
+        "looking": "Recherche...",
+        "vs": "VS",
+
+        "giveUp": "C'est une confirmation d'abandon",
+        "youWillLose": "Vous allez perdre points.",
+        "confirm": "Confirmer",
+        "cancel": "Annuler",
+        "exit": "Sortir",
+
+        "wainting": "En attente...",
+        "pongGameTour": "Tournoi de pong",
+        "champion": "Champion",
+        "start": "Démarrer",
+        "home": "Accueil",
+        "nextMatch": "Prochain match",
+
+        "youWon": "Vous avez gagné",
+        "youLose": "Vous avez perdu",
+        "oppLeft": "l'adversaire a quitté"
+    }
+}

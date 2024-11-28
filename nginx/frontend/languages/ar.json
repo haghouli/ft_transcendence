@@ -1,0 +1,242 @@
+{
+    "welcome": "مرحبا",
+    "search": "...بحث",
+    "notification": "إشعارات",
+    "home" : {
+        "welcome1": "مرحبا بكم في لعبتنا",
+        "welcome2": "استمتع بوقتك مع الأصدقاء!",
+        "welcome3": "لا تتردد في تجربة أي شيء تريد.",
+        "playNow": "العب الآن",
+        "topPlayers": "أفضل اللاعبين",
+        "gameModes": "أوضاع اللعب",
+        "playAi": "Jouez avec le mode IA",
+        "playeTour": "Jouez en mode Tourament",
+        "PlayGame": "Jouer en mode jeu",
+
+        "local": "محلي",
+        "Ai": "الذكاء الاصطناعي",
+        "tournement": "البطولة",
+
+        "areYouReady": "هل أنت مستعد للسيطرة على اللعبة؟",
+        "startPlay": "ابدأ اللعب"
+    },
+
+    "login": {
+        "login": "تسجيل الدخول",
+        "username": "اسم المستخدم",
+        "password": "كلمة المرور",
+        "submit": "إرسال",
+        "or": "أو",
+        "intraLogin": "intra تسجيل الدخول باستخدام",
+        "dontHaveAccout": "هل ليس لديك حساب؟",
+        "singnUp": "سجل"
+    },
+
+    "register": {
+        "signUp": "سجل",
+        "firstName": "الاسم الأول",
+        "lastName": "اسم العائلة",
+        "emailAddress": "عنوان البريد الإلكتروني",
+        "register": "تسجيل",
+        "intraRegister": " intra التسجيل باستخدام",
+        "alreadyHaveAccount": "هل لديك حساب بالفعل؟",
+        "login": "تسجيل الدخول"
+    },
+
+    "profile": {
+        "level": "المستوى",
+        "wins": "الانتصارات",
+        "gamesPlayed": "الألعاب الملعوبة",
+        "losses": "الخسائر",
+        "winRate": "نسبة الفوز",
+        "gamesHistory": "سجل معارك",
+        "gamePlayStatistics": "إحصائيات اللعب",
+        "win": "ربح",
+        "lose": "خسارة",
+        "draw": "تعادل",
+        
+        "unban": "إلغاء الحظر",
+        "cancleRequest": "إلغاء الطلب",
+        "remove": "إزالة",
+        "acceptRequest": "قبول الطلب",
+        "rejectRequest": "رفض الطلب",
+        "addFriend": "إضافة صديق"
+    },
+
+    "chat": {
+        "emptyMessages": "لا توجد رسائل متاحة",
+        "tapeYourMessaege": "اكتب رسالتك...",
+
+        "online": "متصل",
+        "offline": "غير متصل",
+        
+        "viewProfile": "عرض الملف الشخصي",
+        "block": "حظر",
+        "deblock": "إلغاء الحظر",
+        "sendPlayReq": "إرسال طلب للعب",
+
+        "acceptChallenge": "قبول التحدي؟",
+        "accept": "قبول",
+        "decline": "رفض"
+
+    },
+
+    "settings": {
+        "profile": "الملف الشخصي",
+        "security": "الأمان",
+
+        "firstName": "الاسم الأول",
+        "lastName": "اسم العائلة",
+        "username": "اسم المستخدم",
+        "saveChanges": "حفظ التغييرات",
+
+        "oldPwd": "كلمة المرور القديمة",
+        "newPwd": "كلمة المرور الجديدة",
+        "updatePwd": "تحديث كلمة المرور",
+        "enable2fa": "تفعيل المصادقة الثنائية",
+        "disable2fa": "تعطيل المصادقة الثنائية",
+
+        "profileAccount": "حساب الملف الشخصي",
+
+        "gameSettings": "إعدادات اللعبة",
+        "defaultGame": "اللعبة الافتراضية",
+        "defaultLanguages": "اللغات الافتراضية",
+        "defaultBoardColor": "لون اللوحة الافتراضي",
+        "updateSettings": "تحديث الإعدادات"
+    },
+
+    "tictactoe": {
+        "gameMode": "اختر وضع اللعبة",
+        "playFriend": "اللعب مع صديق",
+        "playVsAi": "اللعب ضد الذكاء الاصطناعي",
+        "findOpp": "البحث عن خصم",
+        "player1": "اللاعب 1",
+        "player2": "اللاعب 2",
+        "easy": "سهل",
+        "hard": "صعب",
+        "you": "أنت",
+        "bot": "روبوت",
+        "looking": "جارٍ البحث...",
+        "youWin": "أنت فزت",
+        "youLose": "أنت خسرت",
+        "draw": "تعادل",
+        "gameOverDraw": "انتهت اللعبة بالتعادل.",
+        "gameOverPlayWinStart": "انتهت اللعبة واللاعب ",
+        "gameOverPlayWinEnd": " فاز باللعبة",
+        "playAgain": "العب مجددًا",
+        "back": "رجوع",
+        "oppDisconnect": "خصمك قد فصل الاتصال، تم إلغاء المباراة"
+    },
+
+    "alerts": {
+        "loginSuccess": "تم تسجيل الدخول بنجاح",
+        "friendShipAccept": "تم قبول طلب الصداقة بنجاح",
+        "friendShipAcceptError": "حدث خطأ أثناء قبول الطلب",
+        "friendShipReject": "تم رفض طلب الصداقة بنجاح",
+        "friendShipRejectError": "حدث خطأ أثناء رفض الطلب",
+        "sendRequestSucess": "تم إرسال طلب الصداقة بنجاح",
+        "sendRequestError": "حدث خطأ أثناء إرسال الطلب",
+
+        "wrongUsernameOrPass": "اسم المستخدم أو كلمة المرور غير صحيحة",
+        "loginError": "خطأ في تسجيل الدخول",
+        "efaDisable": "تم تعطيل التوثيق الثنائي بنجاح",
+        "efaDisableError": "حدث خطأ أثناء تعطيل التوثيق الثنائي",
+        "efaEnableSucces": "تم تفعيل التوثيق الثنائي بنجاح",
+        "efaEnableError": "حدث خطأ أثناء تفعيل التوثيق الثنائي",
+
+        "updateSuccess": "تم التحديث بنجاح",
+        "updateError": "حدث خطأ أثناء تحديث ملفك الشخصي",
+
+        "emptyFields": "الحقول فارغة",
+        "noChanges": "لم يتم اكتشاف تغييرات في كلمة المرور",
+        "changePassError": "حدث خطأ أثناء تغيير كلمة المرور",
+        "changePassSuccess": "تم تغيير كلمة المرور بنجاح",
+        "messageSended": "تم إرسال الرسالة",
+        "welcome": "مرحبًا",
+        "invalidCode": "رمز غير صالح",
+
+        "errorOccures": "حدث خطأ",
+        "error": "خطأ",
+
+        "chatRoomCreateSuccess": "تم إنشاء غرفة الدردشة بنجاح",
+        "chatRoomCreateError": "حدث خطأ أثناء إنشاء غرفة الدردشة",
+
+        "acceptFriendShipError": "حدث خطأ أثناء قبول طلب الصداقة",
+        "refuseFriendShipError": "حدث خطأ أثناء رفض طلب الصداقة",
+
+        "gameSettingsUpdate": "تم تحديث إعدادات اللعبة بنجاح",
+
+        "invalidSelectedGame": "وضع اللعبة غير صالح للعبة المحددة.",
+        
+        "chatExist": "الغرفة موجودة بالفعل"
+    },
+
+    "twofapage": {
+        "header": "هنا OTP أدخل رمز",
+        "verify": "تحقق",
+        "cancle": "إلغاء",
+        "notreciev": "لم تستلم رمزك؟",
+        "resend": "إعادة إرسال"
+    },
+
+    "pongGame": {
+        "1vs1": "مباراة 1 ضد 1",
+        "custumizeGame": "خصص لعبتك",
+        "chooseTable": "اختر طاولة",
+        "classic": "كلاسيكي",
+        "standard": "قياسي",
+        "football": "كرة القدم",
+        "customizePlayer": "خصص لاعبك",
+        "player1": "اللاعب 1",
+        "choosePaddle": "اختر المضرب ",
+        "ready": "جاهز",
+        "player2": "اللاعب 2",
+        "startGame": "ابدأ اللعبة",
+
+        "chooseGameMode": "اختر وضع لعبك",
+        "localMatch": "مباراة محلية",
+        "connectAndComplete": "اتصل ونافس مع لاعبين من جميع أنحاء العالم.",
+        "startPlay": "ابدأ اللعب",
+        "onlineMatch": "مباراة عبر الإنترنت",
+        "playLocally": "العب محليًا مع صديق",
+        "createTour": "إنشاء بطولة",
+        "CompleteIn": "تنافس في سلسلة من المباريات لتحديد البطل!",
+        "3Players": "مباراة 3 لاعبين",
+        "challengeFriend": "تحدي الأصدقاء في مباراة ثلاثية",
+
+        "moveRight": "التحرك لليمين",
+        "moveLeft": "التحرك لليسار",
+        "moveUp": "التحرك للأعلى",
+        "moveDown": "التحرك للأسفل",
+        "win": "فوز",
+        "playAgain": "العب مرة أخرى",
+        "mainMenu": "القائمة الرئيسية",
+        "playTicTacToe": "العب تيك تاك تو!",
+
+        "joinTheTour": "انضم إلى البطولة",
+        "enterName": "أدخل اسمك",
+        "join": "انضم",
+        "playeresJoin": "اللاعبون المنضمون:",
+
+        "looking": "جاري البحث...",
+        "vs": "VS",
+
+        "giveUp": "هذه تأكيد لتخلي",
+        "youWillLose": "ستفقد نقاط.",
+        "confirm": "تأكيد",
+        "cancel": "إلغاء",
+        "exit": "خروج",
+
+        "wainting": "انتظار...",
+        "pongGameTour": "بطولة لعبة بونغ",
+        "champion": "بطل",
+        "start": "ابدأ",
+        "home": "الصفحة الرئيسية",
+        "nextMatch": "المباراة التالية",
+
+        "youWon": "أنت فزت",
+        "youLose": "أنت خسرت",
+        "oppLeft": "المنافس غادر"
+
+    }
+}
